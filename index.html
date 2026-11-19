@@ -122,15 +122,30 @@ const COLORS = [
 ];
 let branch = null;
 
+// 只挑自然的人聲；排除 Apple 的特效／怪聲（Albert、Whisper、Zarvox…）
+const GOOD = ["Samantha","Ava","Allison","Susan","Zoe","Nicky","Google US English","Microsoft Aria","Microsoft Jenny","Microsoft Ana"];
+const BAD = /Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Eddy|Flo\b|Fred|Good News|Grandma|Grandpa|Jester|Junior|Kathy|Organ|Ralph|Reed|Rocko|Sandy|Shelley|Superstar|Trinoids|Whisper|Wobble|Zarvox/i;
+let VOICE = null;
+function pickVoice(){
+  const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  for(const g of GOOD){
+    const hits = vs.filter(v => v.name.includes(g));
+    const best = hits.find(v => /premium|enhanced|高品質|優化/i.test(v.name)) || hits[0];
+    if(best) return best;
+  }
+  const ok = vs.filter(v => !BAD.test(v.name));
+  return ok.find(v => /en[-_]US/i.test(v.lang)) || ok[0] || null;
+}
 function speak(text){
   if(!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
+  if(!VOICE) VOICE = pickVoice();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US"; u.rate = 0.8; u.pitch = 1.05;
-  const v = speechSynthesis.getVoices().find(v => /en[-_]US/i.test(v.lang));
-  if(v) u.voice = v;
+  u.lang = "en-US"; u.rate = 0.85; u.pitch = 1;
+  if(VOICE) u.voice = VOICE;
   speechSynthesis.speak(u);
 }
+if("speechSynthesis" in window) speechSynthesis.addEventListener("voiceschanged", () => { VOICE = pickVoice(); });
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 function line(en, zh, who, n, note){
   return `<div class="say">${n ? `<div class="num">${n}</div>` : ""}<div class="txt">${who ? `<div class="who">${who}</div>` : ""}<div class="en">${en}</div><div class="zh">${zh}</div></div>
