@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>睡前英文接話｜What's your favorite color?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F3B5F; --sky:#1E88D0; --sun:#F8D97A; --sun-deep:#D49A1E; --cream:#FBF6EA;
+    --card:rgba(255,255,255,0.9); --shadow:0 10px 30px rgba(15,59,95,0.10);
+    --pick:#1E88D0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--ink); font-family:"Noto Sans TC",sans-serif; line-height:1.65;
+    background:linear-gradient(180deg,#D8EEFB 0%,#BFE3F7 22%,#E3F3EE 42%,var(--cream) 62%) fixed;
+    background-color:var(--cream);
+  }
+  .sun{position:fixed; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle,rgba(248,217,122,.85) 0%,rgba(248,217,122,0) 70%); pointer-events:none}
+  main{max-width:560px; margin:0 auto; padding:28px 16px 60px; position:relative}
+  .tag{font-weight:700; letter-spacing:4px; color:var(--sky); font-size:13px}
+  .tag::before{content:""; display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--sun-deep); margin-right:8px; vertical-align:middle}
+  h1{font-size:26px; letter-spacing:2px; margin:8px 0 6px; line-height:1.35}
+  h1 em{font-style:normal; color:var(--sky); box-shadow:inset 0 -8px 0 var(--sun)}
+  .lead{margin:0 0 18px; font-size:15px}
+  .hero{width:100%; border-radius:24px; display:block; box-shadow:var(--shadow); margin-bottom:22px}
+  .card{background:var(--card); border-radius:26px; box-shadow:var(--shadow); padding:20px 18px; margin-bottom:18px}
+  .step{font-weight:700; color:var(--sun-deep); letter-spacing:3px; font-size:13px}
+  h2{font-size:18px; margin:2px 0 12px}
+  .say{display:flex; align-items:center; gap:12px; background:#F2F8FD; border-radius:18px; padding:12px 14px; margin:8px 0}
+  .say .txt{flex:1}
+  .en{font-weight:700; font-size:18px; color:var(--ink)}
+  .zh{font-size:14px; opacity:.8}
+  .who{font-size:12px; font-weight:700; color:var(--sky); letter-spacing:2px}
+  .spk{flex:none; width:44px; height:44px; border-radius:50%; border:0; background:var(--sky); color:#fff; cursor:pointer; display:grid; place-items:center}
+  .spk:active{transform:scale(.94)}
+  .spk svg{width:22px; height:22px}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .opt{border:2px solid #D6E8F6; background:#fff; border-radius:18px; padding:14px 10px; font:inherit; color:var(--ink); cursor:pointer; text-align:left}
+  .opt b{display:block; font-size:16px}
+  .opt span{font-size:13px; opacity:.75}
+  .opt[aria-pressed="true"]{border-color:var(--sky); background:#EAF5FD}
+  .colors{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
+  .chip{border:2px solid transparent; background:#fff; border-radius:18px; padding:10px 4px; font:inherit; color:var(--ink); cursor:pointer; text-align:center}
+  .chip i{display:block; width:34px; height:34px; border-radius:50%; margin:0 auto 6px; box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+  .chip b{display:block; font-size:14px}
+  .chip span{font-size:12px; opacity:.75}
+  .chip[aria-pressed="true"]{border-color:var(--sky); background:#EAF5FD}
+  .hidden{display:none}
+  .num{flex:none; width:28px; height:28px; border-radius:50%; background:var(--pick); color:#fff; font-weight:700; display:grid; place-items:center; font-size:14px; transition:background .3s}
+  .pickbar{height:8px; border-radius:8px; background:var(--pick); margin:0 0 14px; transition:background .3s}
+  .note{font-size:13px; opacity:.8; margin:4px 0 0 40px}
+  .tip{border-left:4px solid var(--sun); padding:4px 0 4px 12px; margin:0; font-size:15px}
+  .again{display:block; width:100%; border:0; border-radius:18px; background:var(--ink); color:#fff; font:inherit; font-weight:700; padding:14px; cursor:pointer; margin-top:6px}
+  footer{text-align:center; font-size:13px; opacity:.7; margin-top:24px}
+</style>
+</head>
+<body>
+<div class="sun" aria-hidden="true"></div>
+<main>
+  <div class="tag">BEDTIME ENGLISH CHAT</div>
+  <h1>孩子的回答跟範本不一樣，<br><em>要怎麼接？</em></h1>
+  <p class="lead">點點看孩子的回答，就會出現媽媽可以接的下一句。每句都可以按喇叭聽發音。</p>
+  <img class="hero" src="cover.jpg" alt="Rica 和柯基 COCO 坐在床上，旁邊亮著小夜燈">
+
+  <section class="card">
+    <div class="step">STEP 01</div>
+    <h2>媽媽先問</h2>
+    <div class="say"><div class="txt"><div class="en">What's your favorite color?</div><div class="zh">你最喜歡什麼顏色？</div></div>
+      <button class="spk" data-say="What's your favorite color?" aria-label="播放發音"></button></div>
+  </section>
+
+  <section class="card">
+    <div class="step">STEP 02</div>
+    <h2>孩子怎麼回答？</h2>
+    <div class="grid" id="branches">
+      <button class="opt" data-b="en" aria-pressed="false"><b>說英文</b><span>"Pink!"</span></button>
+      <button class="opt" data-b="zh" aria-pressed="false"><b>說中文</b><span>「粉紅色！」</span></button>
+      <button class="opt" data-b="idk" aria-pressed="false"><b>說不知道</b><span>"I don't know."</span></button>
+      <button class="opt" data-b="quiet" aria-pressed="false"><b>不說話</b><span>害羞、看著你</span></button>
+    </div>
+  </section>
+
+  <section class="card hidden" id="colorCard">
+    <div class="step">STEP 03</div>
+    <h2 id="colorTitle">孩子說了哪個顏色？</h2>
+    <div class="colors" id="colors"></div>
+  </section>
+
+  <section class="card hidden" id="replyCard">
+    <div class="step">STEP 04</div>
+    <h2>媽媽這樣接</h2>
+    <div class="pickbar" aria-hidden="true"></div>
+    <div id="bridge"></div>
+    <div id="lines"></div>
+    <button class="again" id="again">換一種回答再試試</button>
+  </section>
+
+  <section class="card">
+    <div class="step">TIP</div>
+    <h2>記住一個原則就好</h2>
+    <p class="tip">孩子說什麼，你就幫他<b>說成完整的句子</b>。<br>不用糾正，也不用逼他說英文，先接住他。</p>
+  </section>
+
+  <footer>COCO the Corgi｜睡前英文聊天</footer>
+</main>
+
+<script>
+const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const COLORS = [
+  {en:"red",    zh:"紅色",   hex:"#E2574C", thing:"apple",  thingZh:"蘋果"},
+  {en:"blue",   zh:"藍色",   hex:"#3B8FD9", thing:"sky",    thingZh:"天空"},
+  {en:"yellow", zh:"黃色",   hex:"#F2C230", thing:"banana", thingZh:"香蕉"},
+  {en:"green",  zh:"綠色",   hex:"#5DB36A", thing:"leaf",   thingZh:"葉子"},
+  {en:"pink",   zh:"粉紅色", hex:"#F29BB8", thing:"flower", thingZh:"花"},
+  {en:"purple", zh:"紫色",   hex:"#9A6FC9", thing:"grape",  thingZh:"葡萄"},
+  {en:"orange", zh:"橘色",   hex:"#F28C38", thing:"carrot", thingZh:"紅蘿蔔"},
+  {en:"brown",  zh:"咖啡色", hex:"#9B6B47", thing:"teddy bear", thingZh:"泰迪熊"},
+];
+let branch = null;
+
+function speak(text){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US"; u.rate = 0.8; u.pitch = 1.05;
+  const v = speechSynthesis.getVoices().find(v => /en[-_]US/i.test(v.lang));
+  if(v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function line(en, zh, who, n, note){
+  return `<div class="say">${n ? `<div class="num">${n}</div>` : ""}<div class="txt">${who ? `<div class="who">${who}</div>` : ""}<div class="en">${en}</div><div class="zh">${zh}</div></div>
+    <button class="spk" data-say="${en.replace(/"/g,"&quot;")}" aria-label="播放發音">${ICON}</button></div>${note ? `<p class="note">${note}</p>` : ""}`;
+}
+
+document.querySelectorAll(".spk").forEach(b => b.innerHTML = ICON);
+document.addEventListener("click", e => {
+  const s = e.target.closest(".spk"); if(s) speak(s.dataset.say);
+});
+
+const colorsEl = document.getElementById("colors");
+colorsEl.innerHTML = COLORS.map((c,i) => `<button class="chip" data-i="${i}" aria-pressed="false"><i style="background:${c.hex}"></i><b>${c.en}</b><span>${c.zh}</span></button>`).join("");
+
+const TITLES = {
+  en:"孩子說了哪個顏色？",
+  zh:"孩子說了哪個顏色？",
+  idk:"先給兩個選擇，孩子選了哪個？",
+  quiet:"指著東西問，孩子點頭的是哪個？",
+};
+
+document.getElementById("branches").addEventListener("click", e => {
+  const b = e.target.closest(".opt"); if(!b) return;
+  branch = b.dataset.b;
+  document.querySelectorAll("#branches .opt").forEach(o => o.setAttribute("aria-pressed", o === b));
+  document.querySelectorAll("#colors .chip").forEach(o => o.setAttribute("aria-pressed", "false"));
+  document.getElementById("colorTitle").textContent = TITLES[branch];
+  document.getElementById("colorCard").classList.remove("hidden");
+  document.getElementById("replyCard").classList.add("hidden");
+  document.getElementById("colorCard").scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+colorsEl.addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b || !branch) return;
+  document.querySelectorAll("#colors .chip").forEach(o => o.setAttribute("aria-pressed", o === b));
+  const c = COLORS[+b.dataset.i];
+  const other = c.en === "blue" ? COLORS[2] : COLORS[1];
+  const mom = c.en === "blue" ? COLORS[2] : COLORS[1];
+  document.documentElement.style.setProperty("--pick", c.hex);
+
+  let bridge = "";
+  if(branch === "zh") bridge = line(`${cap(c.en)}!`, `孩子說「${c.zh}」，媽媽直接幫他說英文`, "先幫他說英文", null);
+  if(branch === "idk") bridge = line(`${cap(c.en)} or ${other.en}?`, `${c.zh}還是${other.zh}？給兩個選擇比較好回答`, "先給兩個選擇", null);
+  if(branch === "quiet") bridge = line(`Is it ${c.en}?`, `指著${c.zh}的東西問：是${c.zh}嗎？點頭就好`, "指著東西問", null);
+  document.getElementById("bridge").innerHTML = bridge;
+
+  const be = c.thing === "teddy bear" ? "The teddy bear is" : `The ${c.thing} is`;
+  document.getElementById("lines").innerHTML =
+    line(`${cap(c.en)}! You like ${c.en}.`, `${c.zh}！你喜歡${c.zh}。`, "重複＋說完整句", 1, "孩子只說一個字也沒關係，媽媽幫他說完整") +
+    line(`Can you find something ${c.en}?`, `你能找到${c.zh}的東西嗎？`, "追問", 2, "孩子會起來找東西，對話就繼續下去了") +
+    line(`Yes! ${be} ${c.en}.`, `對！${c.thingZh}是${c.zh}的。`, "找到之後", 3, `把「${c.thing}」換成孩子找到的東西`) +
+    line(`My favorite color is ${mom.en}.`, `我最喜歡的顏色是${mom.zh}。`, "媽媽分享自己", 4, "換成你自己喜歡的顏色，下次孩子就會學著說");
+
+  const r = document.getElementById("replyCard");
+  r.classList.remove("hidden");
+  r.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+document.getElementById("again").addEventListener("click", () => {
+  branch = null;
+  document.querySelectorAll(".opt,.chip").forEach(o => o.setAttribute("aria-pressed","false"));
+  document.getElementById("colorCard").classList.add("hidden");
+  document.getElementById("replyCard").classList.add("hidden");
+  document.getElementById("branches").scrollIntoView({behavior:"smooth", block:"center"});
+});
+if("speechSynthesis" in window) speechSynthesis.getVoices();
+</script>
+</body>
+</html>
