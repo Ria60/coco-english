@@ -145,7 +145,7 @@ function pickVoice(){
   const ok = vs.filter(v => !BAD.test(v.name));
   return ok.find(v => /en[-_]US/i.test(v.lang)) || ok[0] || null;
 }
-function speak(text){
+function tts(text){
   if(!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   if(!VOICE) VOICE = pickVoice();
@@ -154,6 +154,18 @@ function speak(text){
   if(VOICE) u.voice = VOICE;
   speechSynthesis.speak(u);
 }
+// Gemini（Veda）預錄語音；找不到才退回手機內建語音
+const CLIPS = ["What's your favorite color?", "Red!", "Red or blue?", "Is it red?", "Red! You like red.", "Can you find something red?", "Apple.", "Strawberry.", "Fire truck.", "Yes! The apple is red.", "Yes! The strawberry is red.", "Yes! The fire truck is red.", "Blue!", "Blue or yellow?", "Is it blue?", "Blue! You like blue.", "Can you find something blue?", "Blueberries.", "Whale.", "Umbrella.", "Yes! The blueberries are blue.", "Yes! The whale is blue.", "Yes! The umbrella is blue.", "Yellow!", "Yellow or blue?", "Is it yellow?", "Yellow! You like yellow.", "Can you find something yellow?", "Banana.", "Lemon.", "Duck.", "Yes! The banana is yellow.", "Yes! The lemon is yellow.", "Yes! The duck is yellow.", "Green!", "Green or blue?", "Is it green?", "Green! You like green.", "Can you find something green?", "Leaf.", "Frog.", "Broccoli.", "Yes! The leaf is green.", "Yes! The frog is green.", "Yes! The broccoli is green.", "Pink!", "Pink or blue?", "Is it pink?", "Pink! You like pink.", "Can you find something pink?", "Flower.", "Pig.", "Ice cream.", "Yes! The flower is pink.", "Yes! The pig is pink.", "Yes! The ice cream is pink.", "Purple!", "Purple or blue?", "Is it purple?", "Purple! You like purple.", "Can you find something purple?", "Grapes.", "Eggplant.", "Butterfly.", "Yes! The grapes are purple.", "Yes! The eggplant is purple.", "Yes! The butterfly is purple.", "Orange!", "Orange or blue?", "Is it orange?", "Orange! You like orange.", "Can you find something orange?", "Carrot.", "Orange.", "Pumpkin.", "Yes! The carrot is orange.", "Yes! The orange is orange.", "Yes! The pumpkin is orange.", "Brown!", "Brown or blue?", "Is it brown?", "Brown! You like brown.", "Can you find something brown?", "Teddy bear.", "Cookie.", "Bread.", "Yes! The teddy bear is brown.", "Yes! The cookie is brown.", "Yes! The bread is brown.", "My favorite color is blue.", "My favorite color is yellow."];
+let player = null;
+function play(text, then){
+  const i = CLIPS.indexOf(text);
+  if(i < 0){ tts(text); return; }
+  if(player){ player.onended = null; player.pause(); }
+  player = new Audio(`audio/a${i}.m4a`);
+  if(then) player.onended = then;
+  player.play().catch(() => tts(text));
+}
+function speak(text){ play(text); }
 if("speechSynthesis" in window) speechSynthesis.addEventListener("voiceschanged", () => { VOICE = pickVoice(); });
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 function line(en, zh, who, n, note){
@@ -215,7 +227,7 @@ colorsEl.addEventListener("click", e => {
     document.querySelectorAll("#lines .pic").forEach(o => o.setAttribute("aria-pressed", o === p));
     const s = `Yes! The ${it[0]} ${it[2] ? "are" : "is"} ${c.en}.`;
     document.getElementById("line3").innerHTML = line(s, `對！${it[1]}是${c.zh}的。`, "找到之後", 3, "孩子在家裡找到別的東西，也可以換成那個東西");
-    speak(s);
+    play(cap(it[0]) + ".", () => play(s));
   }));
 
   const r = document.getElementById("replyCard");
