@@ -92,6 +92,24 @@
   .hug .again2{background:var(--sun); color:var(--ink)} .hug .close{background:rgba(255,255,255,.15); color:#fff}
   .fly{position:absolute; bottom:-40px; width:28px; height:28px; opacity:.9; animation:fly linear forwards; pointer-events:none}
   @keyframes fly{to{transform:translateY(-110vh) rotate(200deg); opacity:0}}
+  .card{position:relative}
+  .ava{position:absolute; top:-18px; right:12px; display:flex; align-items:center; gap:6px; pointer-events:none}
+  .ava img{width:78px; height:78px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:var(--shadow); animation:bob 2.6s ease-in-out infinite}
+  .bub{background:#fff; color:var(--sky); font-weight:700; font-size:13px; padding:5px 10px; border-radius:14px; box-shadow:var(--shadow); position:relative; top:-4px; white-space:nowrap}
+  .card:has(.ava) h2{padding-right:120px}
+  .say.kid{background:#FFF6DC}
+  .mini{flex:none; width:44px; height:44px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 3px 8px rgba(15,59,95,.15)}
+  .mini.s{width:30px; height:30px; vertical-align:middle; margin-right:6px; border-width:2px}
+  .duo{display:flex; justify-content:center; margin:-4px 0 10px}
+  .duo img{width:92px; height:92px; border-radius:50%; object-fit:cover; border:4px solid var(--sun); animation:bob 2.4s ease-in-out infinite}
+  .duo img+img{margin-left:-14px; animation-delay:-1.2s}
+  .ythero{display:block; width:100%; border-radius:18px; margin-bottom:14px}
+  .goal{margin:0 0 14px}
+  .goalbar{height:14px; border-radius:10px; background:#EAF2F8; overflow:hidden}
+  .goalbar i{display:block; height:100%; background:linear-gradient(90deg,var(--sun),var(--sun-deep)); border-radius:10px}
+  .goaltxt{display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--sun-deep); margin-top:4px}
+  .ytwave{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; font-weight:700; color:var(--sky)}
+  .ytwave img{width:64px; height:64px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:var(--shadow); animation:bob 2.6s ease-in-out infinite}
   .yt{text-align:center}
   .yt p{margin:0 0 14px; font-size:15px}
   .ytbtn{display:flex; align-items:center; justify-content:center; gap:10px; border-radius:18px; background:#E62117; color:#fff; font-weight:700; font-size:18px; padding:14px; text-decoration:none}
@@ -108,6 +126,7 @@
   <img class="hero" src="cover.jpg" alt="Rica 和柯基 COCO 坐在床上，旁邊亮著小夜燈">
 
   <section class="card">
+    <div class="ava"><span class="bub">Hi!</span><img src="chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">STEP 01</div>
     <h2>媽媽先問</h2>
     <div class="say"><div class="txt"><div class="en">What's your favorite color?</div><div class="zh">你最喜歡什麼顏色？</div></div>
@@ -115,6 +134,7 @@
   </section>
 
   <section class="card">
+    <div class="ava"><span class="bub">Hmm…</span><img src="chars/coco_cape.jpg" alt="柯基 COCO"></div>
     <div class="step">STEP 02</div>
     <h2>孩子怎麼回答？</h2>
     <div class="grid" id="branches">
@@ -126,12 +146,14 @@
   </section>
 
   <section class="card hidden" id="colorCard">
+    <div class="ava"><span class="bub">Pick one!</span><img src="chars/coco_wave.jpg" alt="柯基 COCO"></div>
     <div class="step">STEP 03</div>
     <h2 id="colorTitle">孩子說了哪個顏色？</h2>
     <div class="colors" id="colors"></div>
   </section>
 
   <section class="card hidden" id="replyCard">
+    <div class="ava"><span class="bub">Good job!</span><img src="chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">STEP 04</div>
     <h2>媽媽這樣接</h2>
     <div class="pickbar" aria-hidden="true"></div>
@@ -141,6 +163,7 @@
   </section>
 
   <section class="card night" id="endCard">
+    <div class="duo"><img src="chars/coco_cape.jpg" alt="柯基 COCO"><img src="chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">GREAT JOB</div>
     <div class="congrats">Congratulations, sweetie!<br>You finished today's lesson!</div>
     <div class="zh">恭喜你，寶貝！今天的課完成囉！</div>
@@ -172,10 +195,13 @@
   </section>
 
   <section class="card yt">
+    <img class="ythero" src="cover.jpg" alt="Rica 和柯基 COCO">
     <div class="step">給爸爸媽媽</div>
-    <h2>每天 20 分鐘，你也可以這樣陪孩子說英文</h2>
-    <p>喜歡這樣的互動嗎？訂閱 COCO 的 YouTube 頻道，我會做更多好玩的英文互動，陪你們一起玩！</p>
+    <h2>謝謝你們！</h2>
+    <p>COCO 的頻道才開兩週，就有 <b>230 位爸爸媽媽</b>訂閱了。<br>為了感謝大家，<b>每多 100 位訂閱，我就多做一個互動遊戲</b>送給大家！</p>
+    <div class="goal"><div class="goalbar"><i style="width:30%"></i></div><div class="goaltxt"><span>現在 230 位</span><span>到 300 位 → 下一個遊戲</span></div></div>
     <a class="ytbtn" href="https://www.youtube.com/@HuangCOCO-kids" target="_blank" rel="noopener"><svg viewBox="0 0 30 22" aria-hidden="true"><rect width="30" height="22" rx="6" fill="#fff"/><path d="M12 6.5v9l8-4.5z" fill="#E62117"/></svg>訂閱 COCO 的 YouTube 頻道</a>
+    <div class="ytwave"><img src="chars/coco_wave.jpg" alt="柯基 COCO 揮手"><span>See you on YouTube!</span></div>
   </section>
 
   <footer>COCO the Corgi｜睡前英文聊天</footer>
@@ -243,8 +269,8 @@ function speak(text){
 }
 if("speechSynthesis" in window) speechSynthesis.addEventListener("voiceschanged", () => { VOICE = pickVoice(); });
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
-function line(en, zh, who, n, note){
-  return `<div class="say">${n ? `<div class="num">${n}</div>` : ""}<div class="txt">${who ? `<div class="who">${who}</div>` : ""}<div class="en">${en}</div><div class="zh">${zh}</div></div>
+function line(en, zh, who, n, note, face){
+  return `<div class="say${face ? " kid" : ""}">${face ? `<img class="mini" src="chars/${face}.jpg" alt="">` : n ? `<div class="num">${n}</div>` : ""}<div class="txt">${who ? `<div class="who">${who}</div>` : ""}<div class="en">${en}</div><div class="zh">${zh}</div></div>
     <button class="spk" data-say="${en.replace(/"/g,"&quot;")}" aria-label="播放發音">${ICON}</button></div>${note ? `<p class="note">${note}</p>` : ""}`;
 }
 
@@ -291,9 +317,9 @@ colorsEl.addEventListener("click", e => {
       <span class="w">${it[0]}</span><span class="im"><img src="${imgOf(it[0])}" alt="${it[0]}"></span></button>`).join("");
   document.getElementById("lines").innerHTML =
     line(`${cap(c.en)}! You like ${c.en}.`, `${c.zh}！你喜歡${c.zh}。`, "重複＋說完整句", 1, null) +
-    line(`I like ${c.en}!`, `我喜歡${c.zh}！`, "換孩子跟著說", null, "按喇叭讓孩子跟著說一次，說一個字也很棒") +
+    line(`I like ${c.en}!`, `我喜歡${c.zh}！`, "換孩子跟著 COCO 說", null, "按喇叭讓孩子跟著說一次，說一個字也很棒", "coco_face") +
     line(`Can you find three things that are ${c.en}?`, `你能找到三樣${c.zh}的東西嗎？`, "一起找找看", 2, null) +
-    `<div class="picbox"><p class="pichint">讓孩子點圖片，一樣一樣找出來</p><div class="pics">${pics}</div></div>` +
+    `<div class="picbox"><p class="pichint"><img class="mini s" src="chars/coco_face.jpg" alt="">COCO 也想找！讓孩子點圖片，一樣一樣找出來</p><div class="pics">${pics}</div></div>` +
     `<div id="line3">${line(`Yes! The ___ is ${c.en}.`, `孩子點了圖片後，這句會自動填好`, "找到之後", 3, null)}</div>` +
     line(`What other colors do you like besides ${c.en}? Go find one!`, `除了${c.zh}，你還喜歡什麼顏色？去找一個給我看！`, "再找一個顏色", 4, null) +
     `<button class="again up" id="moreColor">再選一個顏色 ↑</button>`;
