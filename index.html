@@ -64,17 +64,38 @@
   .tip{border-left:4px solid var(--sun); padding:4px 0 4px 12px; margin:0; font-size:15px}
   .again{display:block; width:100%; border:0; border-radius:18px; background:var(--ink); color:#fff; font:inherit; font-weight:700; padding:14px; cursor:pointer; margin-top:6px}
   .again.up{background:#fff; color:var(--sky); border:2px solid var(--sky); margin-top:12px}
-  .night{background:linear-gradient(180deg,#1C3F66 0%,#0F3B5F 100%); color:#fff}
+  .night{background:linear-gradient(180deg,#1C3F66 0%,#0F3B5F 100%); color:#fff; text-align:center}
   .night .step{color:var(--sun)}
-  .night .nm{display:block; font-size:14px; font-weight:700; margin:4px 0 6px; opacity:.9}
-  .night input{width:100%; font:inherit; font-size:20px; font-weight:700; color:var(--ink); border:0; border-radius:16px; padding:12px 16px; margin-bottom:14px}
-  .gn{display:flex; align-items:center; justify-content:center; gap:12px; width:100%; border:0; border-radius:24px; background:var(--sun); color:var(--ink); font:inherit; font-size:28px; font-weight:700; padding:22px 14px; cursor:pointer; box-shadow:0 8px 0 var(--sun-deep)}
-  .gn:active{transform:translateY(4px); box-shadow:0 4px 0 var(--sun-deep)}
-  .gn svg{width:32px; height:32px}
-  .gnout{margin-top:22px; text-align:center}
-  .gnname{font-size:30px; font-weight:700; color:var(--sun); line-height:1.3; margin-bottom:10px; word-break:break-word}
-  .night .gnout .en{color:#fff; font-size:18px; line-height:1.7}
-  .night .gnout .zh{margin-top:8px}
+  .night .say{background:rgba(255,255,255,.1); text-align:left}
+  .night .en{color:#fff}
+  .night .who{color:var(--sun)}
+  .congrats{font-size:26px; font-weight:700; line-height:1.35; color:var(--sun); margin:6px 0 4px}
+  .spk.cg{margin:10px auto 6px; background:var(--sun); color:var(--ink)}
+  .choose{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px}
+  .pickme{border:0; border-radius:24px; background:#fff; color:var(--ink); font:inherit; font-size:22px; font-weight:700; padding:14px 8px 12px; cursor:pointer; box-shadow:0 7px 0 rgba(0,0,0,.25)}
+  .pickme:active{transform:translateY(4px); box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  .pickme svg{display:block; width:96px; height:96px; margin:0 auto 4px; animation:bob 2.4s ease-in-out infinite}
+  .pickme.st svg{animation-delay:-1.2s}
+  @keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+  .hug{position:fixed; inset:0; z-index:20; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px 16px; text-align:center; background:radial-gradient(circle at 50% 42%,#2A5C8E 0%,#0F3B5F 70%); color:#fff; overflow:hidden}
+  .hug.hidden{display:none}
+  .hug .big{width:min(78vw,340px); height:min(78vw,340px); animation:pop .7s cubic-bezier(.3,1.6,.5,1) both, squeeze 1.6s ease-in-out .7s infinite}
+  .hug .arm{transform-box:fill-box; animation:wave 1.6s ease-in-out .7s infinite}
+  .hug .arm.r{transform-origin:0% 0%} .hug .arm.l{transform-origin:100% 0%}
+  @keyframes pop{0%{transform:scale(0) rotate(-20deg)}100%{transform:scale(1)}}
+  @keyframes squeeze{50%{transform:scale(1.06,.95)}}
+  @keyframes wave{50%{transform:rotate(-14deg)}}
+  .hug .msg{font-size:26px; font-weight:700; color:var(--sun); line-height:1.35; margin:14px 0 4px}
+  .hug .zh{color:#fff; opacity:.85; font-size:15px}
+  .hug .row{display:flex; gap:10px; margin-top:20px}
+  .hug .row button{border:0; border-radius:18px; font:inherit; font-weight:700; padding:12px 20px; cursor:pointer}
+  .hug .again2{background:var(--sun); color:var(--ink)} .hug .close{background:rgba(255,255,255,.15); color:#fff}
+  .fly{position:absolute; bottom:-40px; width:28px; height:28px; opacity:.9; animation:fly linear forwards; pointer-events:none}
+  @keyframes fly{to{transform:translateY(-110vh) rotate(200deg); opacity:0}}
+  .yt{text-align:center}
+  .yt p{margin:0 0 14px; font-size:15px}
+  .ytbtn{display:flex; align-items:center; justify-content:center; gap:10px; border-radius:18px; background:#E62117; color:#fff; font-weight:700; font-size:18px; padding:14px; text-decoration:none}
+  .ytbtn svg{width:30px; height:22px}
   footer{text-align:center; font-size:13px; opacity:.7; margin-top:24px}
 </style>
 </head>
@@ -119,16 +140,28 @@
     <button class="again" id="again">換一種回答再試試</button>
   </section>
 
-  <section class="card night" id="nightCard">
-    <div class="step">GOOD NIGHT</div>
-    <h2>玩夠了，說晚安</h2>
-    <label class="nm" for="kidName">孩子的英文名字</label>
-    <input id="kidName" type="text" placeholder="例如 Emma" maxlength="20" autocomplete="off">
-    <button class="gn" id="gn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>Good night!</button>
-    <div class="gnout hidden" id="gnout">
-      <div class="gnname" id="gnname"></div>
-      <div class="en">Sleep tight.<br>Be good for Mommy and Daddy, okay?<br>It's time for bed.<br>Let's play again tomorrow!</div>
-      <div class="zh">好好睡喔。要乖乖聽爸爸媽媽的話喔。該睡覺囉，我們明天再一起玩！</div>
+  <section class="card night" id="endCard">
+    <div class="step">GREAT JOB</div>
+    <div class="congrats">Congratulations, sweetie!<br>You finished today's lesson!</div>
+    <div class="zh">恭喜你，寶貝！今天的課完成囉！</div>
+    <button class="spk cg" data-say="Congratulations, sweetie! You finished today's lesson!" aria-label="播放發音"></button>
+    <div class="say"><div class="txt"><div class="who">讓孩子選一個</div><div class="en">Which one do you like?</div><div class="zh">你喜歡哪一個？</div></div>
+      <button class="spk" data-say="Which one do you like?" aria-label="播放發音"></button></div>
+    <div class="choose">
+      <button class="pickme hr" data-hug="heart"><svg viewBox="0 0 100 100" aria-hidden="true">
+  <path class="arm l" d="M12 50 q-10 4 -6 16" stroke="#E8607E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path class="arm r" d="M88 50 q10 4 6 16" stroke="#E8607E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M50 88C22 68 8 52 8 34 8 19 19 9 31 9c9 0 15 5 19 12 4-7 10-12 19-12 12 0 23 10 23 25 0 18-14 34-42 54z" fill="#F27C98"/>
+  <path d="M36 42q4-5 8 0M56 42q4-5 8 0" stroke="#0F3B5F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M42 53q8 8 16 0" stroke="#0F3B5F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <circle cx="31" cy="51" r="5" fill="#FFB3C4"/><circle cx="69" cy="51" r="5" fill="#FFB3C4"/></svg>heart</button>
+      <button class="pickme st" data-hug="star"><svg viewBox="0 0 100 100" aria-hidden="true">
+  <path class="arm l" d="M14 42 q-10 6 -6 18" stroke="#E0A91E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path class="arm r" d="M86 42 q10 6 6 18" stroke="#E0A91E" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M50.0 10.0 L62.3 37.0 L91.8 40.4 L70.0 60.5 L75.9 89.6 L50.0 75.0 L24.1 89.6 L30.0 60.5 L8.2 40.4 L37.7 37.0Z" fill="#F8D04A" stroke="#F8D04A" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M38 48q4-5 8 0M54 48q4-5 8 0" stroke="#0F3B5F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M43 57q7 7 14 0" stroke="#0F3B5F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <circle cx="34" cy="56" r="4.5" fill="#F7A86B"/><circle cx="66" cy="56" r="4.5" fill="#F7A86B"/></svg>star</button>
     </div>
   </section>
 
@@ -138,9 +171,22 @@
     <p class="tip">孩子說什麼，你就幫他<b>說成完整的句子</b>。<br>不用糾正，也不用逼他說英文，先接住他。</p>
   </section>
 
+  <section class="card yt">
+    <div class="step">給爸爸媽媽</div>
+    <h2>每天 20 分鐘，你也可以這樣陪孩子說英文</h2>
+    <p>喜歡這樣的互動嗎？訂閱 COCO 的 YouTube 頻道，我會做更多好玩的英文互動，陪你們一起玩！</p>
+    <a class="ytbtn" href="https://www.youtube.com/@HuangCOCO-kids" target="_blank" rel="noopener"><svg viewBox="0 0 30 22" aria-hidden="true"><rect width="30" height="22" rx="6" fill="#fff"/><path d="M12 6.5v9l8-4.5z" fill="#E62117"/></svg>訂閱 COCO 的 YouTube 頻道</a>
+  </section>
+
   <footer>COCO the Corgi｜睡前英文聊天</footer>
 </main>
 
+<div class="hug hidden" id="hug" role="dialog" aria-label="Good night">
+  <div class="big" id="hugArt"></div>
+  <div class="msg" id="hugMsg"></div>
+  <div class="zh" id="hugZh"></div>
+  <div class="row"><button class="again2" id="hugAgain">再抱一次</button><button class="close" id="hugClose">關閉</button></div>
+</div>
 <script>
 const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const COLORS = [
@@ -180,7 +226,7 @@ function tts(text){
   speechSynthesis.speak(u);
 }
 // Gemini（Veda）預錄語音；找不到才退回手機內建語音
-const CLIPS = ["What's your favorite color?", "Red!", "Red or blue?", "Is it red?", "Red! You like red.", "Can you find something red?", "Apple.", "Strawberry.", "Fire truck.", "Yes! The apple is red.", "Yes! The strawberry is red.", "Yes! The fire truck is red.", "Blue!", "Blue or yellow?", "Is it blue?", "Blue! You like blue.", "Can you find something blue?", "Blueberries.", "Whale.", "Umbrella.", "Yes! The blueberries are blue.", "Yes! The whale is blue.", "Yes! The umbrella is blue.", "Yellow!", "Yellow or blue?", "Is it yellow?", "Yellow! You like yellow.", "Can you find something yellow?", "Banana.", "Lemon.", "Duck.", "Yes! The banana is yellow.", "Yes! The lemon is yellow.", "Yes! The duck is yellow.", "Green!", "Green or blue?", "Is it green?", "Green! You like green.", "Can you find something green?", "Leaf.", "Frog.", "Broccoli.", "Yes! The leaf is green.", "Yes! The frog is green.", "Yes! The broccoli is green.", "Pink!", "Pink or blue?", "Is it pink?", "Pink! You like pink.", "Can you find something pink?", "Flower.", "Pig.", "Ice cream.", "Yes! The flower is pink.", "Yes! The pig is pink.", "Yes! The ice cream is pink.", "Purple!", "Purple or blue?", "Is it purple?", "Purple! You like purple.", "Can you find something purple?", "Grapes.", "Eggplant.", "Butterfly.", "Yes! The grapes are purple.", "Yes! The eggplant is purple.", "Yes! The butterfly is purple.", "Orange!", "Orange or blue?", "Is it orange?", "Orange! You like orange.", "Can you find something orange?", "Carrot.", "Orange.", "Pumpkin.", "Yes! The carrot is orange.", "Yes! The orange is orange.", "Yes! The pumpkin is orange.", "Brown!", "Brown or blue?", "Is it brown?", "Brown! You like brown.", "Can you find something brown?", "Teddy bear.", "Cookie.", "Bread.", "Yes! The teddy bear is brown.", "Yes! The cookie is brown.", "Yes! The bread is brown.", "My favorite color is blue.", "My favorite color is yellow.", "I like red!", "Can you find three things that are red?", "What other colors do you like besides red?", "I like blue!", "Can you find three things that are blue?", "What other colors do you like besides blue?", "I like yellow!", "Can you find three things that are yellow?", "What other colors do you like besides yellow?", "I like green!", "Can you find three things that are green?", "What other colors do you like besides green?", "Go find one!", "I like pink!", "Can you find three things that are pink?", "What other colors do you like besides pink?", "I like purple!", "Can you find three things that are purple?", "What other colors do you like besides purple?", "I like orange!", "Can you find three things that are orange?", "What other colors do you like besides orange?", "I like brown!", "Can you find three things that are brown?", "What other colors do you like besides brown?", "Good night, sweetie! Sleep tight. Be good for Mommy and Daddy, okay? It's time for bed. Let's play again tomorrow!"];
+const CLIPS = ["What's your favorite color?", "Red!", "Red or blue?", "Is it red?", "Red! You like red.", "Can you find something red?", "Apple.", "Strawberry.", "Fire truck.", "Yes! The apple is red.", "Yes! The strawberry is red.", "Yes! The fire truck is red.", "Blue!", "Blue or yellow?", "Is it blue?", "Blue! You like blue.", "Can you find something blue?", "Blueberries.", "Whale.", "Umbrella.", "Yes! The blueberries are blue.", "Yes! The whale is blue.", "Yes! The umbrella is blue.", "Yellow!", "Yellow or blue?", "Is it yellow?", "Yellow! You like yellow.", "Can you find something yellow?", "Banana.", "Lemon.", "Duck.", "Yes! The banana is yellow.", "Yes! The lemon is yellow.", "Yes! The duck is yellow.", "Green!", "Green or blue?", "Is it green?", "Green! You like green.", "Can you find something green?", "Leaf.", "Frog.", "Broccoli.", "Yes! The leaf is green.", "Yes! The frog is green.", "Yes! The broccoli is green.", "Pink!", "Pink or blue?", "Is it pink?", "Pink! You like pink.", "Can you find something pink?", "Flower.", "Pig.", "Ice cream.", "Yes! The flower is pink.", "Yes! The pig is pink.", "Yes! The ice cream is pink.", "Purple!", "Purple or blue?", "Is it purple?", "Purple! You like purple.", "Can you find something purple?", "Grapes.", "Eggplant.", "Butterfly.", "Yes! The grapes are purple.", "Yes! The eggplant is purple.", "Yes! The butterfly is purple.", "Orange!", "Orange or blue?", "Is it orange?", "Orange! You like orange.", "Can you find something orange?", "Carrot.", "Orange.", "Pumpkin.", "Yes! The carrot is orange.", "Yes! The orange is orange.", "Yes! The pumpkin is orange.", "Brown!", "Brown or blue?", "Is it brown?", "Brown! You like brown.", "Can you find something brown?", "Teddy bear.", "Cookie.", "Bread.", "Yes! The teddy bear is brown.", "Yes! The cookie is brown.", "Yes! The bread is brown.", "My favorite color is blue.", "My favorite color is yellow.", "I like red!", "Can you find three things that are red?", "What other colors do you like besides red?", "I like blue!", "Can you find three things that are blue?", "What other colors do you like besides blue?", "I like yellow!", "Can you find three things that are yellow?", "What other colors do you like besides yellow?", "I like green!", "Can you find three things that are green?", "What other colors do you like besides green?", "Go find one!", "I like pink!", "Can you find three things that are pink?", "What other colors do you like besides pink?", "I like purple!", "Can you find three things that are purple?", "What other colors do you like besides purple?", "I like orange!", "Can you find three things that are orange?", "What other colors do you like besides orange?", "I like brown!", "Can you find three things that are brown?", "What other colors do you like besides brown?", "Good night, sweetie! Sleep tight. Be good for Mommy and Daddy, okay? It's time for bed. Let's play again tomorrow!", "Congratulations, sweetie! You finished today's lesson!", "Which one do you like?", "Here's a big heart hug for you! Good night, sweetie!", "Here's a big star hug for you! Good night, sweetie!"];
 let player = null;
 function play(text, then){
   const i = CLIPS.indexOf(text);
@@ -275,14 +321,32 @@ document.getElementById("again").addEventListener("click", () => {
   document.getElementById("replyCard").classList.add("hidden");
   document.getElementById("branches").scrollIntoView({behavior:"smooth", block:"center"});
 });
-const nameEl = document.getElementById("kidName");
-try{ nameEl.value = localStorage.getItem("kidName") || ""; }catch(e){}
-document.getElementById("gn").addEventListener("click", () => {
-  const nm = nameEl.value.trim();
-  try{ localStorage.setItem("kidName", nm); }catch(e){}
-  document.getElementById("gnname").textContent = nm ? `Good night, dear ${nm}!` : "Good night, sweetie!";
-  document.getElementById("gnout").classList.remove("hidden");
-  play(CLIPS[CLIPS.length - 1]);
+const HUG = {
+  heart:{art:document.querySelector('.pickme.hr svg').outerHTML, en:"Here's a big heart hug for you! Good night, sweetie!", zh:"送你一個大大的愛心抱抱！晚安，寶貝！", fly:"#F27C98"},
+  star:{art:document.querySelector('.pickme.st svg').outerHTML, en:"Here's a big star hug for you! Good night, sweetie!", zh:"送你一個大大的星星抱抱！晚安，寶貝！", fly:"#F8D04A"},
+};
+let hugKind = null;
+function showHug(kind){
+  hugKind = kind; const H = HUG[kind], box = document.getElementById("hug");
+  const art = document.getElementById("hugArt"); art.innerHTML = H.art;
+  art.style.animation = "none"; art.offsetWidth; art.style.animation = "";
+  document.getElementById("hugMsg").textContent = H.en;
+  document.getElementById("hugZh").textContent = H.zh;
+  box.querySelectorAll(".fly").forEach(f => f.remove());
+  for(let i=0;i<14;i++){
+    const f = document.createElement("div"); f.className = "fly";
+    f.innerHTML = H.art.replace(/<path class="arm[^>]*>/g,"");
+    f.style.left = (Math.random()*92)+"%"; f.style.animationDuration = (3+Math.random()*3)+"s"; f.style.animationDelay = (Math.random()*2)+"s";
+    const s = 18+Math.random()*22; f.style.width = f.style.height = s+"px";
+    box.appendChild(f);
+  }
+  box.classList.remove("hidden");
+  play(H.en);
+}
+document.querySelectorAll(".pickme").forEach(b => b.addEventListener("click", () => showHug(b.dataset.hug)));
+document.getElementById("hugAgain").addEventListener("click", () => showHug(hugKind));
+document.getElementById("hugClose").addEventListener("click", () => {
+  document.getElementById("hug").classList.add("hidden"); if(player) player.pause();
 });
 if("speechSynthesis" in window) speechSynthesis.getVoices();
 </script>
