@@ -122,13 +122,13 @@
 <main>
   <div class="tag">BEDTIME ENGLISH CHAT</div>
   <h1>孩子的回答跟範本不一樣，<br><em>要怎麼接？</em></h1>
-  <p class="lead">點點看孩子的回答，就會出現媽媽可以接的下一句。每句都可以按喇叭聽發音。</p>
+  <p class="lead">點點看孩子的回答，就會出現爸爸媽媽可以接的下一句。每句都可以按喇叭聽發音。</p>
   <img class="hero" src="cover.jpg" alt="Rica 和柯基 COCO 坐在床上，旁邊亮著小夜燈">
 
   <section class="card">
     <div class="ava"><span class="bub">Hi!</span><img src="chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">STEP 01</div>
-    <h2>媽媽先問</h2>
+    <h2>爸爸媽媽先問</h2>
     <div class="say"><div class="txt"><div class="en">What's your favorite color?</div><div class="zh">你最喜歡什麼顏色？</div></div>
       <button class="spk" data-say="What's your favorite color?" aria-label="播放發音"></button></div>
   </section>
@@ -155,7 +155,7 @@
   <section class="card hidden" id="replyCard">
     <div class="ava"><span class="bub">Good job!</span><img src="chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">STEP 04</div>
-    <h2>媽媽這樣接</h2>
+    <h2>爸爸媽媽這樣接</h2>
     <div class="pickbar" aria-hidden="true"></div>
     <div id="bridge"></div>
     <div id="lines"></div>
@@ -308,7 +308,7 @@ colorsEl.addEventListener("click", e => {
   document.documentElement.style.setProperty("--pick", c.hex);
 
   let bridge = "";
-  if(branch === "zh") bridge = line(`${cap(c.en)}!`, `孩子說「${c.zh}」，媽媽直接幫他說英文`, "先幫他說英文", null);
+  if(branch === "zh") bridge = line(`${cap(c.en)}!`, `孩子說「${c.zh}」，爸爸媽媽直接幫他說英文`, "先幫他說英文", null);
   if(branch === "idk") bridge = line(`${cap(c.en)} or ${other.en}?`, `${c.zh}還是${other.zh}？給兩個選擇比較好回答`, "先給兩個選擇", null);
   if(branch === "quiet") bridge = line(`Is it ${c.en}?`, `指著${c.zh}的東西問：是${c.zh}嗎？點頭就好`, "指著東西問", null);
   document.getElementById("bridge").innerHTML = bridge;
