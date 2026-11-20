@@ -103,7 +103,11 @@
   .duo{display:flex; justify-content:center; margin:-4px 0 10px}
   .duo img{width:92px; height:92px; border-radius:50%; object-fit:cover; border:4px solid var(--sun); animation:bob 2.4s ease-in-out infinite}
   .duo img+img{margin-left:-14px; animation-delay:-1.2s}
-  .ythero{display:block; width:100%; border-radius:18px; margin-bottom:14px}
+  .ythero{position:relative; display:block; border-radius:18px; overflow:hidden; margin-bottom:14px; box-shadow:var(--shadow)}
+  .ythero img{display:block; width:100%; aspect-ratio:16/9; object-fit:cover}
+  .ythero .play{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:68px; height:50px; animation:bob 2.4s ease-in-out infinite}
+  .ythero .play svg{width:100%; height:100%; filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))}
+  .ythero .cap{position:absolute; left:0; right:0; bottom:0; padding:18px 12px 8px; color:#fff; font-weight:700; font-size:14px; text-align:left; background:linear-gradient(transparent,rgba(0,0,0,.55))}
   .goal{margin:0 0 14px}
   .goalbar{height:14px; border-radius:10px; background:#EAF2F8; overflow:hidden}
   .goalbar i{display:block; height:100%; background:linear-gradient(90deg,var(--sun),var(--sun-deep)); border-radius:10px}
@@ -195,7 +199,7 @@
   </section>
 
   <section class="card yt">
-    <img class="ythero" src="cover.jpg" alt="Rica 和柯基 COCO">
+    <a class="ythero" href="https://www.youtube.com/@HuangCOCO-kids" target="_blank" rel="noopener"><img src="chars/yt_A.jpg" alt="COCO 的 ABC 影片：字母 A"><span class="play"><svg viewBox="0 0 30 22" aria-hidden="true"><rect width="30" height="22" rx="6" fill="#E62117"/><path d="M12 6.5v9l8-4.5z" fill="#fff"/></svg></span><span class="cap">Letter A with COCO the Corgi</span></a>
     <div class="step">給爸爸媽媽</div>
     <h2>謝謝你們！</h2>
     <p>COCO 的頻道才開兩週，就有 <b>230 位爸爸媽媽</b>訂閱了。<br>為了感謝大家，<b>每多 100 位訂閱，我就多做一個互動遊戲</b>送給大家！</p>
