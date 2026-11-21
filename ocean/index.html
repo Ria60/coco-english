@@ -134,11 +134,16 @@
   .world{position:absolute; left:0; top:0; height:100%; aspect-ratio:1934/1080; background:url(img/bg_real.jpg) center/100% 100% no-repeat; will-change:transform}
   .world img{position:absolute; pointer-events:none; -webkit-user-drag:none}
   .sp{position:absolute}
-  .rica{left:1.5%; top:2%; height:22%}
+  .boat{position:absolute; z-index:4; transform-origin:50% 85%; animation:rock 3.6s ease-in-out infinite}
+  .boat img.b{display:block; width:100%; position:static}
+  .boat .inb{position:absolute; width:11%}
+  @keyframes rock{50%{rotate:-2.5deg; translate:0 4%}}
   .coco{position:absolute; z-index:5; transform-origin:50% 50%}
-  .coco .body{width:100%; display:block; position:static; animation:paddle 1.4s ease-in-out infinite}
-  .coco.left .body{transform:scaleX(-1)}
-  @keyframes paddle{50%{translate:0 -4%; rotate:-3deg}}
+  .cbody{position:relative; width:100%; transform-origin:50% 55%; will-change:transform}
+  .cbody img{display:block; width:100%; position:static}
+  .cbody .top{clip-path:inset(0 0 36% 0)}
+  .cbody .legs{position:absolute; left:0; top:0; clip-path:inset(60% 0 0 0); filter:url(#paddle)}
+  .coco.moving .cbody .legs{filter:url(#paddle2)}
   .coco .held{position:absolute; width:40%; right:-4%; bottom:-16%}
   .coco.left .held{right:auto; left:-4%}
   .ani{z-index:3; pointer-events:auto !important; cursor:pointer}
@@ -209,7 +214,7 @@
   .pc em{font-style:normal; font-size:12px; color:var(--sun-deep); font-weight:700; display:block; margin-top:2px}
   @keyframes wiggle{25%{rotate:-9deg}75%{rotate:9deg}}
   @keyframes stretch{50%{scale:1.25}}
-  @media (prefers-reduced-motion: reduce){ .fish,.turtle,.weed,.coco .body{animation:none} }
+  @media (prefers-reduced-motion: reduce){ .fish,.turtle,.weed{animation:none} }
 </style>
 </head>
 <body>
@@ -220,11 +225,17 @@
   <filter id="wig2" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.03" numOctaves="1" seed="5" result="t">
     <animate attributeName="baseFrequency" dur="1.2s" values="0.008 0.025;0.012 0.045;0.008 0.025" repeatCount="indefinite"/></feTurbulence>
     <feDisplacementMap in="SourceGraphic" in2="t" scale="22" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="paddle" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.01" numOctaves="1" seed="7" result="t">
+    <animate attributeName="baseFrequency" dur="2.4s" values="0.02 0.01;0.03 0.014;0.02 0.01" repeatCount="indefinite"/></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="paddle2" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.025 0.012" numOctaves="1" seed="9" result="t">
+    <animate attributeName="baseFrequency" dur="0.6s" values="0.02 0.01;0.04 0.018;0.02 0.01" repeatCount="indefinite"/></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
 </svg>
 <div class="game" id="game">
   <div class="world" id="world">
-    <img class="rica" id="rica" src="img/rica_beach.webp" alt="Rica 拿著小籃子站在沙灘上">
-    <div class="coco" id="coco"><img class="body" src="img/coco_swim.webp" alt="戴著浮潛面罩的柯基 COCO"></div>
+    <div class="boat" id="boat"><img class="b" src="img/rica_boat.webp" alt="Rica 坐在小船上，拿著小籃子"></div>
+    <div class="coco" id="coco"><div class="cbody" id="cbody"><img class="top" src="img/coco_swim.webp" alt="戴著浮潛面罩的柯基 COCO"><img class="legs" src="img/coco_swim.webp" alt=""></div></div>
   </div>
   <div class="hud">
     <div class="pill"><img id="mImg" src="img/crab.webp" alt=""><div><div class="en" id="mEn">Find a crab!</div><div class="zh" id="mZh">去水草裡找螃蟹</div></div></div>
@@ -373,7 +384,7 @@ const TREASURE = [
   {n:"pearl",    zh:"珍珠", weed:0, color:"The pearl is white."},
 ];
 let H = 0, W = 0, VW = 0, camX = 0, snap = true;
-const C = {x:18, y:19, w:.15}; // COCO 位置（% 世界）與大小（H 比例）
+const C = {x:30, y:24, w:.15}; const BOAT = {x:30, h:.19}; // COCO 位置（% 世界）與大小（H 比例）
 const X_MIN = 15, X_MAX = 93, Y_MIN = 14, Y_MAX = 72;
 let state = "idle", mission = 0, greeted = new Set(), checked = new Set(), held = new Set(), faceLeft = false;
 const els = {};
@@ -399,15 +410,17 @@ function layout(){
   const t = TREASURE[Math.min(mission, 2)], tw = .1 * H;
   tEl.style.width = tw + "px"; tEl.style.left = (px(WEEDS[t.weed].x) - tw/2) + "px"; tEl.style.top = (py(86) - tw*0.6) + "px";
   coco.style.width = C.w * H + "px";
+  document.getElementById("boat").style.width = (BOAT.h * H * 1530/1286) + "px";
   place();
 }
 function place(){
   const cw = C.w * H;
   coco.style.left = (C.x / 100 * W - cw/2) + "px"; coco.style.top = (C.y / 100 * H) + "px";
   coco.classList.toggle("left", faceLeft);
-  // 鏡頭：在沙灘附近停在最左邊（看得到 Rica）；游出去後慢慢跟著 COCO，往前游時前方多留一點空間
+  const boat = document.getElementById("boat"), bw = BOAT.h * H * 1530/1286;
+  boat.style.left = (BOAT.x/100*W - bw/2) + "px"; boat.style.top = (0.02*H) + "px";
+  // 鏡頭：慢慢跟著 COCO，往前游時前方多留一點空間
   let target = C.x / 100 * W - VW * (faceLeft ? 0.6 : 0.4);
-  if(C.x < 24) target = 0;
   target = Math.max(0, Math.min(Math.max(0, W - VW), target));
   camX += (target - camX) * (snap ? 1 : 0.08); snap = false;
   world.style.transform = `translateX(${-camX}px)`;
@@ -446,25 +459,51 @@ function checkWorld(){
       }
     });
   }
-  if(state === "carry" && C.x < 26 && C.y < 24) home();
+  if(state === "carry" && Math.abs(C.x - BOAT.x) < 11 && C.y < 27) home();
 }
 // ===== 移動：按住按鈕持續游 =====
 const dirs = new Set(); let last = 0, lastSay = {};
 const SAY = {up:"Swim up!", down:"Swim down!", left:"Swim back!", right:"Swim forward!"};
+const V = {x:0, y:0}, SX = 11 * 1080/1934, SY = 15; let T = 0, snorkelT = 0;
+const cbody = document.getElementById("cbody");
 function loop(t){
   const dt = Math.min(50, t - (last || t)) / 1000; last = t;
-  if(dirs.size && (state === "go" || state === "carry")){
-    const sx = 11 * 1080/1934 * (H ? 1 : 1), sy = 15;
-    if(dirs.has("left")){ C.x -= sx*dt; faceLeft = true; }
-    if(dirs.has("right")){ C.x += sx*dt; faceLeft = false; }
-    if(dirs.has("up")) C.y -= sy*dt;
-    if(dirs.has("down")) C.y += sy*dt;
-    C.x = Math.max(X_MIN, Math.min(X_MAX, C.x)); C.y = Math.max(Y_MIN, Math.min(Y_MAX, C.y));
-    place(); if(Math.random() < dt*3) bubbles();
-    checkWorld();
-  }
-  else place();
+  const can = state === "go" || state === "carry";
+  const ix = can ? (dirs.has("right") ? 1 : 0) - (dirs.has("left") ? 1 : 0) : 0;
+  const iy = can ? (dirs.has("down") ? 1 : 0) - (dirs.has("up") ? 1 : 0) : 0;
+  if(ix < 0) faceLeft = true; if(ix > 0) faceLeft = false;
+  // 水的阻力：慢慢加速；放開後滑行一小段才停
+  const k = 1 - Math.exp(-dt * (ix || iy ? 2.6 : 1.4));
+  V.x += (ix*SX - V.x) * k; V.y += (iy*SY - V.y) * k;
+  if(!can){ V.x *= 0.9; V.y *= 0.9; }
+  C.x += V.x * dt; C.y += V.y * dt;
+  if(C.x < X_MIN || C.x > X_MAX){ C.x = Math.max(X_MIN, Math.min(X_MAX, C.x)); V.x = 0; }
+  if(C.y < Y_MIN || C.y > Y_MAX){ C.y = Math.max(Y_MIN, Math.min(Y_MAX, C.y)); V.y = 0; }
+  const sp = Math.min(1, Math.hypot(V.x/SX, V.y/SY));
+  // 身體：起伏、往上游抬頭、往下游低頭、划水時身體微微伸縮
+  T += dt * (2.2 + 5 * sp);
+  const ch = C.w * H * 0.8;
+  const bob = Math.sin(T) * ch * (0.04 + 0.03 * sp);
+  let tilt = Math.max(-24, Math.min(24, V.y / SY * 24)) + Math.sin(T * 0.5) * 3;
+  if(faceLeft) tilt = -tilt;
+  const st = 1 + Math.sin(T * 2) * 0.03 * sp;
+  cbody.style.transform = `translateY(${bob}px) rotate(${tilt}deg) scale(${(faceLeft ? -1 : 1) * st}, ${1/st})`;
+  coco.classList.toggle("moving", sp > 0.2);
+  // 泡泡：呼吸管定時冒泡；游的時候腳後面冒泡
+  snorkelT += dt; if(state !== "idle" && snorkelT > (1.8 - sp)){ snorkelT = 0; bubbleAt(faceLeft ? 0.36 : 0.64, 0.02); }
+  if(sp > 0.35 && Math.random() < dt * 5) bubbleAt(faceLeft ? 0.97 : 0.03, 0.62);
+  // 船：一直漂在畫面左上方（跟著鏡頭慢慢漂），手機上隨時看得到 Rica
+  if(state !== "home" && W){ BOAT.x = (camX + VW * (0.27 + 0.02 * Math.sin(t / 2600))) / W * 100; }
+  place();
+  if(state !== "home" && W){ BOAT.x = (camX + VW * (0.27 + 0.02 * Math.sin(t / 2600))) / W * 100; const bw = BOAT.h * H * 1530/1286; document.getElementById("boat").style.left = (BOAT.x/100*W - bw/2) + "px"; }
+  if(can && sp > 0.02) checkWorld();
   requestAnimationFrame(loop);
+}
+function bubbleAt(fx, fy){
+  const cw = C.w * H, b = mk("div", "bubble");
+  const s = 6 + Math.random()*6; b.style.width = b.style.height = s + "px";
+  b.style.left = (C.x/100*W - cw/2 + fx*cw) + "px"; b.style.top = (C.y/100*H + fy*cw*0.8) + "px";
+  setTimeout(() => b.remove(), 3100);
 }
 requestAnimationFrame(loop);
 document.querySelectorAll(".pad button").forEach(b => {
@@ -501,18 +540,18 @@ function pick(){
   const t = TREASURE[mission]; tEl.style.display = "none";
   const h = document.createElement("img"); h.className = "held"; h.src = `img/${t.n}.webp`; h.alt = ""; coco.appendChild(h);
   document.getElementById("pickBtn").classList.add("hidden"); game.classList.remove("picking");
-  state = "carry"; hint(["left","up"]);
+  state = "carry"; hint(["up"]);
   seq(["I found it!", "Now swim up!"]);
 }
 function home(){
   const t = TREASURE[mission]; state = "home"; dirs.clear(); hint([]);
   const hEl = coco.querySelector(".held");
-  const wr = world.getBoundingClientRect(), rica = document.getElementById("rica"), rr = rica.getBoundingClientRect();
-  // 起點：COCO 手上的寶物；終點：Rica 的籃子（籃子在 Rica 圖片的 50% 寬、70% 高）
+  const wr = world.getBoundingClientRect(), boat = document.getElementById("boat"), rr = boat.getBoundingClientRect();
+  // 起點：COCO 手上的寶物；終點：船上 Rica 的籃子（在船圖片的 41% 寬、58% 高）
   const size = .085 * H;
   let sx = C.x/100*W, sy = C.y/100*H + .06*H;
   if(hEl){ const hr = hEl.getBoundingClientRect(); sx = hr.left - wr.left + hr.width/2; sy = hr.top - wr.top + hr.height/2; hEl.remove(); }
-  const tx = rr.left - wr.left + rr.width*0.5, ty = rr.top - wr.top + rr.height*0.70;
+  const tx = rr.left - wr.left + rr.width*0.41, ty = rr.top - wr.top + rr.height*0.58;
   const fly = mk("img", "toss"); fly.src = `img/${t.n}.webp`; fly.alt = "";
   fly.style.cssText = `width:${size}px; left:0; top:0; z-index:8`;
   const mx = (sx + tx)/2, my = Math.min(sy, ty) - .22*H;
@@ -521,9 +560,9 @@ function home(){
     {duration:1300, easing:"cubic-bezier(.3,.1,.3,1)", fill:"forwards"}).onfinish = () => {
     fly.remove();
     // 籃子裡留一個小小的寶物
-    const inb = mk("img", "inbasket"); inb.src = `img/${t.n}.webp`; inb.alt = "";
-    const iw = .028 * H; inb.style.cssText = `width:${iw}px; left:${tx - iw/2 + (mission-1)*iw*0.7}px; top:${ty - iw*0.55}px; z-index:2`;
-    rica.animate([{translate:"0 0"},{translate:"0 -8%"},{translate:"0 0"}], {duration:450, iterations:2, easing:"ease-out"});
+    const inb = document.createElement("img"); inb.className = "inb"; inb.src = `img/${t.n}.webp`; inb.alt = "";
+    inb.style.left = (31 + mission*6) + "%"; inb.style.top = "49%"; boat.appendChild(inb);
+    boat.animate([{translate:"0 0"},{translate:"0 -8%"},{translate:"0 0"}], {duration:450, iterations:2, easing:"ease-out"});
     for(let i=0;i<8;i++){ const d = mk("div", "spark"); d.style.left = tx + "px"; d.style.top = ty + "px";
       d.style.setProperty("--dx", (Math.random()*120-60)+"px"); d.style.setProperty("--dy", (-30-Math.random()*70)+"px"); setTimeout(() => d.remove(), 1100); }
     document.querySelectorAll("#basket i")[mission].innerHTML = `<img src="img/${t.n}.webp" alt="">`;
