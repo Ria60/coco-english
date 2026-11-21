@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>COCO 去浮潛｜睡前英文第二關</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
@@ -118,101 +118,135 @@
   .goaltxt{display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--sun-deep); margin-top:4px}
   .ytwave{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; font-weight:700; color:var(--sky)}
   .ytwave img{width:64px; height:64px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:var(--shadow); animation:bob 2.6s ease-in-out infinite}
+  .nextlv{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); background:linear-gradient(135deg,#DDF0FB,#FFF6DC)}
+  .nextlv img{width:88px; flex:none; animation:bob 2.6s ease-in-out infinite}
+  .nextlv b{display:block; font-size:18px}
+  .nextlv span{font-size:13px; opacity:.8}
+  .nextlv i{font-style:normal; font-size:26px; font-weight:700; color:var(--sky); margin-left:auto}
   .yt{text-align:center}
   .yt p{margin:0 0 14px; font-size:15px}
   .ytbtn{display:flex; align-items:center; justify-content:center; gap:10px; border-radius:18px; background:#E62117; color:#fff; font-weight:700; font-size:18px; padding:14px; text-decoration:none}
   .ytbtn svg{width:30px; height:22px}
   footer{text-align:center; font-size:13px; opacity:.7; margin-top:24px}
 
+  html,body{overscroll-behavior:none}
+  .game{position:relative; width:100%; height:100svh; min-height:520px; overflow:hidden; background:#9ED6E8; touch-action:pan-y; user-select:none; -webkit-user-select:none}
+  .world{position:absolute; left:0; top:0; height:100%; aspect-ratio:1934/1080; background:url(img/bg_real.jpg) center/100% 100% no-repeat; will-change:transform}
+  .world img{position:absolute; pointer-events:none; -webkit-user-drag:none}
+  .sp{position:absolute}
+  .rica{left:1.5%; top:2%; height:22%}
+  .coco{position:absolute; z-index:5; transform-origin:50% 50%}
+  .coco .body{width:100%; display:block; position:static; animation:paddle 1.4s ease-in-out infinite}
+  .coco.left .body{transform:scaleX(-1)}
+  @keyframes paddle{50%{translate:0 -4%; rotate:-3deg}}
+  .coco .held{position:absolute; width:40%; right:-4%; bottom:-16%}
+  .coco.left .held{right:auto; left:-4%}
+  .ani{z-index:3; pointer-events:auto !important; cursor:pointer}
+  .fish{animation:fishswim 9s ease-in-out infinite}
+  @keyframes fishswim{0%,100%{translate:0 0; scale:1 1}45%{translate:180% 10%; scale:1 1}50%{translate:180% 10%; scale:-1 1}95%{translate:0 0; scale:-1 1}}
+  .turtle{animation:turtleswim 14s ease-in-out infinite}
+  @keyframes turtleswim{0%,100%{translate:0 0}50%{translate:-60% 8%}}
+  .dolphin{animation:bob 3s ease-in-out infinite}
+  .dolphin.jump{animation:djump 1.6s ease-in-out 2}
+  @keyframes djump{0%{translate:0 0; rotate:0deg}30%{translate:40% -105%; rotate:-30deg}50%{translate:80% -120%; rotate:5deg}75%{translate:120% 10%; rotate:40deg}100%{translate:0 0; rotate:0deg}}
+  .octo{z-index:3; cursor:pointer}
+  .octo img{position:absolute; inset:0; width:100%; pointer-events:none}
+  .octo .head{clip-path:inset(0 0 36% 0)}
+  .octo .legs{clip-path:inset(62% 0 0 0); filter:url(#wig)}
+  .octo.go .legs{filter:url(#wig2)}
+  .octo.go{animation:wiggle .45s ease-in-out 6}
+  .weed{z-index:4; transform-origin:50% 100%; animation:sway 5s ease-in-out infinite}
+  .weed.part{animation:part 1.2s ease-out forwards}
+  @keyframes sway{50%{rotate:3deg}}
+  @keyframes part{to{rotate:-14deg; translate:-35% 0; opacity:.55}}
+  .treasure{z-index:2}
+  .treasure.shine{z-index:6; animation:stretch .9s ease-in-out 3}
+  .pearl{filter:drop-shadow(0 0 10px rgba(255,255,240,.9))}
+  .splash{position:absolute; width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.9); z-index:4; pointer-events:none; animation:drop .9s ease-out forwards}
+  @keyframes drop{to{translate:var(--dx) var(--dy); opacity:0}}
+  .bubble{position:absolute; width:9px; height:9px; border-radius:50%; border:2px solid rgba(255,255,255,.85); pointer-events:none; z-index:4; animation:rise 3s linear forwards}
+  @keyframes rise{to{translate:0 -160px; opacity:0}}
+  .say2{position:absolute; z-index:7; background:#fff; border-radius:16px; padding:6px 12px; font-weight:700; font-size:15px; color:var(--ink); box-shadow:0 4px 14px rgba(15,59,95,.25);
+    white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .4s; translate:-50% -100%}
+  .say2.on{opacity:1}
+  .say2 small{display:block; color:var(--sky); font-size:13px}
+  .hud{position:absolute; right:0; top:0; padding:calc(env(safe-area-inset-top) + 10px) 12px 0; display:flex; flex-direction:column; gap:6px; align-items:flex-end; z-index:10; pointer-events:none}
+  .pill{display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.88); border-radius:20px; padding:6px 12px 6px 6px; box-shadow:0 4px 14px rgba(15,59,95,.15); pointer-events:auto}
+  .pill img{width:40px; height:40px; object-fit:contain}
+  .pill .en{font-size:16px; line-height:1.2}
+  .pill .zh{font-size:12px}
+  .basket{display:flex; gap:4px; background:rgba(255,255,255,.88); border-radius:20px; padding:6px 8px; box-shadow:0 4px 14px rgba(15,59,95,.15)}
+  .basket i{width:30px; height:30px; border-radius:50%; background:rgba(15,59,95,.08); display:grid; place-items:center}
+  .basket i img{width:28px; height:28px; object-fit:contain}
+  .pad{position:absolute; bottom:calc(env(safe-area-inset-bottom) + 14px); z-index:10; display:flex; gap:10px}
+  .pad.l{left:12px} .pad.r{right:12px; flex-direction:column; gap:8px}
+  .pad button{width:74px; height:66px; border:0; border-radius:20px; background:rgba(255,255,255,.85); color:var(--ink); font:inherit; font-weight:700; font-size:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 5px 0 rgba(15,59,95,.25); touch-action:none; cursor:pointer}
+  .pad button svg{width:28px; height:28px}
+  .pad button:active,.pad button.down{transform:translateY(3px); box-shadow:0 2px 0 rgba(15,59,95,.25); background:#fff}
+  .pad button.hint{background:var(--sun); animation:glow 1.2s ease-in-out infinite}
+  @keyframes glow{50%{filter:brightness(1.1); scale:1.06}}
+  .pickb{position:absolute; left:50%; bottom:calc(env(safe-area-inset-bottom) + 24px); translate:-50% 0; z-index:11; border:0; border-radius:24px; background:#FFB9C9; color:var(--ink);
+    font:inherit; font-weight:700; font-size:26px; padding:16px 26px; box-shadow:0 7px 0 #E8889F; animation:glow 1.2s ease-in-out infinite; cursor:pointer}
+  .pickb.hidden{display:none}
+  .game.picking .pad{visibility:hidden}
+  .start{position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:20px;
+    background:linear-gradient(180deg,rgba(15,59,95,.15),rgba(15,59,95,.45)); color:#fff}
+  .start h1{color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.25); margin:0}
+  .start h1 em{color:var(--sun); box-shadow:none}
+  .start p{margin:0; font-size:14px; text-shadow:0 1px 6px rgba(0,0,0,.3)}
+  .start button{border:0; border-radius:24px; font:inherit; font-weight:700; font-size:26px; padding:16px 30px; color:var(--ink); background:var(--sun); box-shadow:0 7px 0 var(--sun-deep); cursor:pointer; margin-top:6px}
+  .scrollhint{position:absolute; left:50%; bottom:6px; translate:-50% 0; z-index:9; font-size:11px; color:#fff; opacity:.8; text-shadow:0 1px 4px rgba(0,0,0,.4); pointer-events:none}
   .back{display:inline-block; font-size:13px; font-weight:700; color:var(--sky); text-decoration:none; margin-bottom:10px}
-  .gamecard{padding:14px 12px 16px}
-  .mission{display:flex; align-items:center; gap:10px; background:#FFF6DC; border-radius:18px; padding:8px 12px; margin:0 0 10px; min-height:62px}
-  .mission img{width:46px; height:46px; object-fit:contain; flex:none}
-  .mission .t{flex:1}
-  .mission .en{font-size:17px}
-  .basket{display:flex; gap:4px; flex:none}
-  .basket i{width:26px; height:26px; border-radius:50%; background:rgba(15,59,95,.08); display:grid; place-items:center}
-  .basket i img{width:24px; height:24px; object-fit:contain}
-  .stage{position:relative; width:100%; max-width:min(100%, calc(70vh * 0.558)); margin:0 auto; aspect-ratio:1536/2752; border-radius:22px; overflow:hidden;
-    background:url(img/bg_sea.jpg) center/cover; box-shadow:var(--shadow); touch-action:manipulation; user-select:none; -webkit-user-select:none}
-  .stage img{position:absolute; pointer-events:none; -webkit-user-drag:none}
-  .rica{left:1%; top:1%; height:23%}
-  .ani{cursor:pointer; pointer-events:auto !important; animation:bob 3s ease-in-out infinite}
-  .ani.greet{animation:none}
-  .ani.fish.greet{animation:swimfish 1.4s ease-in-out 2}
-  .ani.dolphin.greet{animation:jump 1.2s ease-in-out 2}
-  .ani.whale.greet{animation:splash 1s ease-in-out 3}
-  .ani.seahorse.greet{animation:float 2s ease-in-out 2}
-  .ani.turtle.greet{animation:slow 3s ease-in-out 1}
-  .ani.octopus.greet{animation:wiggle .5s ease-in-out 5}
-  .ani.starfish.greet{animation:stretch .9s ease-in-out 3}
-  .ani.crab.greet{animation:sideways 1.2s ease-in-out 2}
-  @keyframes swimfish{50%{transform:translateX(22%) rotate(-6deg)}}
-  @keyframes jump{40%{transform:translateY(-45%) rotate(-18deg)}70%{transform:translateY(5%)}}
-  @keyframes splash{50%{transform:scale(1.12,.9)}}
-  @keyframes float{50%{transform:translateY(-25%)}}
-  @keyframes slow{50%{transform:translateX(18%)}}
-  @keyframes wiggle{25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
-  @keyframes stretch{50%{transform:scale(1.25)}}
-  @keyframes sideways{25%{transform:translateX(-18%)}75%{transform:translateX(18%)}}
-  .coco{left:52%; width:22%; transform:translateX(-50%); transition:top 1s ease-in-out; z-index:3}
-  .coco img{position:static; width:100%; display:block; animation:paddle 1.6s ease-in-out infinite}
-  .coco{position:absolute}
-  @keyframes paddle{50%{transform:translateY(-4%) rotate(-3deg)}}
-  .coco .held{position:absolute; width:42%; right:-6%; bottom:-14%}
-  .target{left:43%; top:85%; width:15%; z-index:2; animation:bob 3s ease-in-out infinite}
-  .bub{position:absolute; z-index:4; background:#fff; border-radius:16px; padding:6px 10px; font-weight:700; font-size:14px; color:var(--ink);
-    box-shadow:0 4px 12px rgba(15,59,95,.18); white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .4s}
-  .bub.on{opacity:1}
-  .bub small{display:block; color:var(--sky); font-size:12px}
-  .bubble{position:absolute; width:8px; height:8px; border-radius:50%; border:2px solid rgba(255,255,255,.8); pointer-events:none; animation:rise 3s linear forwards; z-index:2}
-  @keyframes rise{to{transform:translateY(-140px); opacity:0}}
-  .start{position:absolute; inset:0; z-index:6; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:rgba(15,59,95,.25)}
-  .start button,.ctl button{border:0; border-radius:22px; font:inherit; font-weight:700; cursor:pointer; color:var(--ink); background:var(--sun); box-shadow:0 7px 0 var(--sun-deep)}
-  .start button{font-size:26px; padding:16px 28px}
-  .start button:active,.ctl button:active{transform:translateY(4px); box-shadow:0 3px 0 var(--sun-deep)}
-  .ctl{display:flex; gap:14px; justify-content:center; margin-top:16px}
-  .ctl button{flex:1; max-width:180px; font-size:24px; padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:0; line-height:1.1}
-  .ctl button svg{width:34px; height:34px}
-  .ctl button.dn{background:#BFE3F7; box-shadow:0 7px 0 #7FB9DC}
-  .ctl button.dn:active{box-shadow:0 3px 0 #7FB9DC}
-  .ctl button.pick{max-width:none; background:#FFB9C9; box-shadow:0 7px 0 #E8889F; font-size:26px; padding:18px}
-  .ctl .hint{animation:glow 1.2s ease-in-out infinite}
-  @keyframes glow{50%{filter:brightness(1.12); transform:scale(1.04)}}
-  .ctl.hidden{display:none}
-  .howto{font-size:13px; opacity:.8; text-align:center; margin:10px 0 0}
   .phr{display:grid; grid-template-columns:1fr 1fr; gap:10px}
   .pc{border:0; background:#F2F8FD; border-radius:18px; padding:10px 8px; font:inherit; color:var(--ink); cursor:pointer; text-align:center}
   .pc img{width:72%; aspect-ratio:1; object-fit:contain; display:block; margin:0 auto 4px}
-  .pc img.greet{animation:wiggle .5s ease-in-out 3}
-  .pc b{display:block; font-size:16px}
-  .pc span{font-size:12px; opacity:.75; display:block}
+  .pc img.go{animation:wiggle .5s ease-in-out 3}
+  .pc b{display:block; font-size:16px} .pc span{font-size:12px; opacity:.75; display:block}
   .pc em{font-style:normal; font-size:12px; color:var(--sun-deep); font-weight:700; display:block; margin-top:2px}
-  .nextlvl{display:block; text-align:center; text-decoration:none}
+  @keyframes wiggle{25%{rotate:-9deg}75%{rotate:9deg}}
+  @keyframes stretch{50%{scale:1.25}}
+  @media (prefers-reduced-motion: reduce){ .fish,.turtle,.weed,.coco .body{animation:none} }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wig" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.025" numOctaves="1" seed="3" result="t">
+    <animate attributeName="baseFrequency" dur="5s" values="0.006 0.025;0.009 0.035;0.006 0.025" repeatCount="indefinite"/></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wig2" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.03" numOctaves="1" seed="5" result="t">
+    <animate attributeName="baseFrequency" dur="1.2s" values="0.008 0.025;0.012 0.045;0.008 0.025" repeatCount="indefinite"/></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="22" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+<div class="game" id="game">
+  <div class="world" id="world">
+    <img class="rica" src="img/rica_beach.webp" alt="Rica 拿著小籃子站在沙灘上">
+    <div class="coco" id="coco"><img class="body" src="img/coco_swim.webp" alt="戴著浮潛面罩的柯基 COCO"></div>
+  </div>
+  <div class="hud">
+    <div class="pill"><img id="mImg" src="img/crab.webp" alt=""><div><div class="en" id="mEn">Find a crab!</div><div class="zh" id="mZh">去水草裡找螃蟹</div></div></div>
+    <div class="basket" id="basket"><i></i><i></i><i></i></div>
+  </div>
+  <div class="pad l"><button data-d="left" aria-label="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>back</button><button data-d="right" aria-label="forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>forward</button></div>
+  <div class="pad r"><button data-d="up" aria-label="up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>up</button><button data-d="down" aria-label="down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>down</button></div>
+  <button class="pickb hidden" id="pickBtn">Pick it up!</button>
+  <div class="start" id="start">
+    <div class="tag" style="color:#fff">BEDTIME ENGLISH · LEVEL 2</div>
+    <h1>COCO 去浮潛，<br><em>幫 Rica 找寶物！</em></h1>
+    <p>按住 up / down / forward / back 帶 COCO 游泳<br>寶物藏在水草裡，游過去看看！</p>
+    <button id="startBtn">Let's dive in!</button>
+    <p style="opacity:.85">（會有聲音，請打開手機音量）</p>
+  </div>
+  <div class="scrollhint">往下滑看說明 ↓</div>
+</div>
 <div class="sun" aria-hidden="true"></div>
 <main>
   <a class="back" href="../">← 第一關：What's your favorite color?</a>
-  <div class="tag">BEDTIME ENGLISH · LEVEL 2</div>
-  <h1>COCO 去浮潛，<br><em>幫 Rica 找寶物！</em></h1>
-  <p class="lead">按 <b>up</b> / <b>down</b> 帶 COCO 在海裡游，把海底的寶物撿回岸上。路上遇到海洋動物，孩子跟著說一句 <b>I can ___!</b> 還可以一起做動作。</p>
-
-  <section class="card gamecard" id="game">
-    <div class="mission"><img id="mImg" src="img/starfish.webp" alt=""><div class="t"><div class="who">Rica 的任務</div><div class="en" id="mEn">Find a starfish!</div><div class="zh" id="mZh">找到海星</div></div>
-      <div class="basket" id="basket"><i></i><i></i><i></i></div></div>
-    <div class="stage" id="stage">
-      <img class="rica" src="img/rica_beach.webp" alt="Rica 拿著小籃子站在沙灘上">
-      <div class="coco" id="coco"><img src="img/coco_swim.webp" alt="戴著浮潛面罩的柯基 COCO"></div>
-      <img class="target" id="target" src="img/starfish.webp" alt="">
-      <div class="start" id="start"><button id="startBtn">Let's dive in!</button><div class="zh" style="color:#fff">點一下開始（會有聲音）</div></div>
-    </div>
-    <div class="ctl" id="ctl"><button class="up" id="upBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>up</button><button class="dn" id="dnBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>down</button></div>
-    <div class="ctl hidden" id="pickCtl"><button class="pick" id="pickBtn">Pick it up!</button></div>
-    <p class="howto">小提醒：點海裡的動物，可以再聽一次牠說的話</p>
+  <section class="card">
+    <div class="step">給爸爸媽媽</div>
+    <h2>怎麼陪孩子玩</h2>
+    <p class="tip">讓孩子自己按按鈕，爸爸媽媽在旁邊跟著說 <b>Swim up! / Swim down!</b>。遇到動物時，一起說 <b>I can ___!</b> 再一起做動作。找不到寶物沒關係，水草會說 <b>Hmm, not here!</b>，再游去下一叢看看。</p>
   </section>
-
   <section class="card hidden" id="phrases">
     <div class="ava"><span class="bub" style="opacity:1;position:relative">Let's say it!</span><img src="../chars/rica_face.jpg" alt="Rica"></div>
     <div class="step">I CAN ___!</div>
@@ -296,7 +330,7 @@ function tts(text){
 }
 
 
-const CLIPS = ["Let's dive in!", "Swim up!", "Swim down!", "COCO, can you find a starfish?", "COCO, can you find a crab?", "COCO, can you find a seashell?", "You found a starfish!", "You found a crab!", "You found a seashell!", "I found it!", "Pick it up!", "Now swim up!", "Thank you, COCO!", "The starfish is yellow.", "The crab is red.", "The seashell is pink.", "Hello, fish!", "Hello, dolphin!", "Hello, whale!", "Hello, seahorse!", "Hello, turtle!", "Hello, octopus!", "I can swim!", "I can jump!", "I can splash!", "I can float!", "I can swim slowly!", "I can wiggle!", "I can stretch!", "I can walk sideways!", "You found them all!", "Let's say it together!"];
+const CLIPS = ["Let's dive in!", "Swim up!", "Swim down!", "COCO, can you find a starfish?", "COCO, can you find a crab?", "COCO, can you find a seashell?", "You found a starfish!", "You found a crab!", "You found a seashell!", "I found it!", "Pick it up!", "Now swim up!", "Thank you, COCO!", "The starfish is yellow.", "The crab is red.", "The seashell is pink.", "Hello, fish!", "Hello, dolphin!", "Hello, whale!", "Hello, seahorse!", "Hello, turtle!", "Hello, octopus!", "I can swim!", "I can jump!", "I can splash!", "I can float!", "I can swim slowly!", "I can wiggle!", "I can stretch!", "I can walk sideways!", "You found them all!", "Let's say it together!", "Swim forward!", "Swim back!", "Hmm, not here!", "COCO, can you find a pearl?", "You found a pearl!", "The pearl is white."];
 const END = {"Congratulations, sweetie! You finished today's lesson!":117,"Which one do you like?":118,
   "Here's a big heart hug for you! Good night, sweetie!":119,"Here's a big star hug for you! Good night, sweetie!":120};
 let player = null, busy = false, seqId = 0, waiting = [];
@@ -309,149 +343,192 @@ function play(text, then){
   player.onended = () => { busy = false; if(then) then(); else if(waiting.length) seq(waiting.shift()); };
   player.play().catch(() => { tts(text); busy = false; if(then) setTimeout(then, 1200); });
 }
-function seq(list, done){ // 依序播放（會打斷正在講的話）
+function seq(list, done){
   const id = ++seqId; waiting = [];
   const go = i => { if(id !== seqId) return;
-    if(i >= list.length){ if(done) done(); else if(waiting.length){ const w = waiting.shift(); seq(w); } return; }
+    if(i >= list.length){ if(done) done(); else if(waiting.length) seq(waiting.shift()); return; }
     play(list[i], () => setTimeout(() => go(i+1), 250)); };
   go(0);
 }
-function say(list){ // 動物打招呼：正在講話就排隊，不打斷
-  if(busy){ waiting = [list]; return; }
-  seq(list);
-}
+function say(list){ if(busy){ waiting = [list]; return; } seq(list); }
 function speak(text){ seqId++; waiting = []; play(text); }
 document.querySelectorAll(".spk").forEach(b => b.innerHTML = ICON);
 document.addEventListener("click", e => { const s = e.target.closest(".spk"); if(s) speak(s.dataset.say); });
 
+// ===== 世界座標：x 用世界寬度 %，y 用世界高度 %；大小用高度 H 的比例 =====
+const world = document.getElementById("world"), game = document.getElementById("game"), coco = document.getElementById("coco");
 const ANIMALS = [
-  {n:"fish",     zh:"小魚", top:25, side:"left:5%",  w:19, can:"I can swim!",         canZh:"我會游泳！",     act:"雙手合起來，像魚一樣扭一扭往前游"},
-  {n:"dolphin",  zh:"海豚", top:31, side:"right:4%", w:20, can:"I can jump!",         canZh:"我會跳！",       act:"原地跳一下"},
-  {n:"whale",    zh:"鯨魚", top:42, side:"left:3%",  w:25, can:"I can splash!",       canZh:"我會潑水！",     act:"雙手拍一拍，像在潑水"},
-  {n:"seahorse", zh:"海馬", top:50, side:"right:9%", w:12, can:"I can float!",        canZh:"我會漂浮！",     act:"張開手，輕輕上下飄"},
-  {n:"turtle",   zh:"海龜", top:60, side:"left:4%",  w:23, can:"I can swim slowly!",  canZh:"我會慢慢游！",   act:"手慢慢划，越慢越好"},
-  {n:"octopus",  zh:"章魚", top:66, side:"right:4%", w:21, can:"I can wiggle!",       canZh:"我會扭來扭去！", act:"全身扭來扭去"},
+  {n:"fish",    x:34, y:36, s:.11, can:"I can swim!",        canZh:"我會游泳！",     act:"雙手合起來，像魚一樣扭一扭往前游"},
+  {n:"dolphin", x:52, y:17, s:.13, can:"I can jump!",        canZh:"我會跳！",       act:"原地跳一下"},
+  {n:"turtle",  x:70, y:42, s:.15, can:"I can swim slowly!", canZh:"我會慢慢游！",   act:"手慢慢划，越慢越好"},
+  {n:"octopus", x:86, y:56, s:.13, can:"I can wiggle!",      canZh:"我會扭來扭去！", act:"全身扭來扭去"},
 ];
+const WEEDS = [ {x:31, v:1}, {x:45, v:2}, {x:60, v:3}, {x:75, v:1}, {x:91, v:2} ];
 const TREASURE = [
-  {n:"starfish", zh:"海星", color:"The starfish is yellow.", colorZh:"海星是黃色的。", can:"I can stretch!", canZh:"我會伸展！", act:"手腳張開變成大星星"},
-  {n:"crab",     zh:"螃蟹", color:"The crab is red.",        colorZh:"螃蟹是紅色的。", can:"I can walk sideways!", canZh:"我會橫著走！", act:"像螃蟹一樣橫著走"},
-  {n:"seashell", zh:"貝殼", color:"The seashell is pink.",   colorZh:"貝殼是粉紅色的。"},
+  {n:"crab",     zh:"螃蟹", weed:1, color:"The crab is red.",      can:"I can walk sideways!", canZh:"我會橫著走！", act:"像螃蟹一樣橫著走"},
+  {n:"seashell", zh:"貝殼", weed:3, color:"The seashell is pink."},
+  {n:"pearl",    zh:"珍珠", weed:0, color:"The pearl is white."},
 ];
-const stage = document.getElementById("stage"), coco = document.getElementById("coco"), target = document.getElementById("target");
-const TOP_MIN = 8, TOP_MAX = 74, STEP = 7.5;
-let y = TOP_MIN, mission = 0, state = "idle", greeted = new Set();
+let H = 0, W = 0, VW = 0, camX = 0, snap = true;
+const C = {x:18, y:19, w:.15}; // COCO 位置（% 世界）與大小（H 比例）
+const X_MIN = 15, X_MAX = 93, Y_MIN = 14, Y_MAX = 72;
+let state = "idle", mission = 0, greeted = new Set(), checked = new Set(), held = new Set(), faceLeft = false;
 const els = {};
+function mk(tag, cls, html){ const e = document.createElement(tag); if(cls) e.className = cls; if(html) e.innerHTML = html; world.appendChild(e); return e; }
 ANIMALS.forEach(a => {
-  const im = document.createElement("img"); im.className = "ani " + a.n; im.src = `img/${a.n}.webp`; im.alt = a.n;
-  im.style.cssText = `top:${a.top}%; ${a.side}; width:${a.w}%`;
-  im.addEventListener("click", () => greet(a, true)); stage.appendChild(im); els[a.n] = im;
-  const b = document.createElement("div"); b.className = "bub"; b.style.cssText = `top:${a.top - 6}%; ${a.side}`; stage.appendChild(b); els[a.n+"_b"] = b;
+  let e;
+  if(a.n === "octopus"){ e = mk("div", "sp octo", `<img class="head" src="img/octopus.webp" alt="octopus"><img class="legs" src="img/octopus.webp" alt="">`); }
+  else { e = mk("img", "ani " + a.n); e.src = `img/${a.n}.webp`; e.alt = a.n; }
+  e.addEventListener("click", () => greet(a, true)); els[a.n] = e;
+  els[a.n + "_say"] = mk("div", "say2");
 });
-target.addEventListener("click", () => { if(state === "found") pick(); });
-target.style.pointerEvents = "auto";
+WEEDS.forEach((w, i) => { const e = mk("img", "weed"); e.src = `img/seaweed${w.v}.webp`; e.alt = ""; els["weed" + i] = e; });
+const tEl = mk("img", "treasure"); tEl.alt = ""; tEl.style.pointerEvents = "auto"; tEl.addEventListener("click", () => { if(state === "found") pick(); });
 
-function place(){ coco.style.top = y + "%"; }
+function layout(){
+  H = game.clientHeight; W = H * 1934 / 1080; VW = game.clientWidth;
+  world.style.width = W + "px";
+  const px = (x) => x / 100 * W, py = (y) => y / 100 * H;
+  ANIMALS.forEach(a => { const e = els[a.n], w = a.s * H;
+    e.style.width = w + "px"; if(a.n === "octopus") e.style.height = w + "px";
+    e.style.left = (px(a.x) - w/2) + "px"; e.style.top = py(a.y) + "px"; });
+  WEEDS.forEach((wd, i) => { const e = els["weed" + i], h = .34 * H; e.style.height = h + "px"; e.style.left = (px(wd.x) - h*0.33) + "px"; e.style.top = (py(95) - h) + "px"; });
+  const t = TREASURE[Math.min(mission, 2)], tw = .1 * H;
+  tEl.style.width = tw + "px"; tEl.style.left = (px(WEEDS[t.weed].x) - tw/2) + "px"; tEl.style.top = (py(86) - tw*0.6) + "px";
+  coco.style.width = C.w * H + "px";
+  place();
+}
+function place(){
+  const cw = C.w * H;
+  coco.style.left = (C.x / 100 * W - cw/2) + "px"; coco.style.top = (C.y / 100 * H) + "px";
+  coco.classList.toggle("left", faceLeft);
+  // 鏡頭：在沙灘附近停在最左邊（看得到 Rica）；游出去後慢慢跟著 COCO，往前游時前方多留一點空間
+  let target = C.x / 100 * W - VW * (faceLeft ? 0.6 : 0.4);
+  if(C.x < 24) target = 0;
+  target = Math.max(0, Math.min(Math.max(0, W - VW), target));
+  camX += (target - camX) * (snap ? 1 : 0.08); snap = false;
+  world.style.transform = `translateX(${-camX}px)`;
+}
+window.addEventListener("resize", layout);
+
 function bubbles(){
-  for(let i=0;i<3;i++){ const b = document.createElement("div"); b.className = "bubble";
-    b.style.left = (48 + Math.random()*10) + "%"; b.style.top = (y + 4) + "%"; b.style.animationDelay = (i*0.25)+"s";
-    stage.appendChild(b); setTimeout(() => b.remove(), 3600); }
+  const b = mk("div", "bubble"); b.style.left = (C.x/100*W + (faceLeft ? 20 : -20)) + "px"; b.style.top = (C.y/100*H + 10) + "px";
+  setTimeout(() => b.remove(), 3100);
+}
+function showSay(a, html){
+  const s = els[a.n + "_say"]; s.innerHTML = html; s.style.left = a.x/100*W + "px"; s.style.top = (a.y/100*H - 6) + "px";
+  s.classList.add("on"); clearTimeout(s._t); s._t = setTimeout(() => s.classList.remove("on"), 4200);
+}
+function splash(xPct){
+  for(let i=0;i<10;i++){ const d = mk("div", "splash"); d.style.left = xPct/100*W + "px"; d.style.top = (13/100*H) + "px";
+    d.style.setProperty("--dx", (Math.random()*80-40)+"px"); d.style.setProperty("--dy", (-20-Math.random()*50)+"px"); setTimeout(() => d.remove(), 1000); }
 }
 function greet(a, force){
   if(!force && greeted.has(a.n)) return; greeted.add(a.n);
-  const im = els[a.n], b = els[a.n+"_b"];
-  im.classList.remove("greet"); void im.offsetWidth; im.classList.add("greet");
-  b.innerHTML = `Hello, ${a.n}!<small>${a.can}</small>`; b.classList.add("on");
-  clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove("on"), 4200);
-  setTimeout(() => im.classList.remove("greet"), 3200);
+  const e = els[a.n];
+  showSay(a, `Hello, ${a.n}!<small>${a.can}</small>`);
+  if(a.n === "dolphin"){ e.classList.remove("jump"); void e.offsetWidth; e.classList.add("jump"); setTimeout(() => splash(a.x + 2), 900); setTimeout(() => splash(a.x + 4), 2500); setTimeout(() => e.classList.remove("jump"), 3300); }
+  if(a.n === "octopus"){ e.classList.add("go"); setTimeout(() => e.classList.remove("go"), 3000); }
+  if(a.n === "fish" || a.n === "turtle"){ e.animate([{filter:"brightness(1)"},{filter:"brightness(1.25) drop-shadow(0 0 12px #fff)"},{filter:"brightness(1)"}], {duration:900, iterations:2}); }
   if(force) seq([`Hello, ${a.n}!`, a.can]); else say([`Hello, ${a.n}!`, a.can]);
 }
-function checkMeet(){
-  const cy = y + 6;
-  for(const a of ANIMALS){ const ay = a.top + 5; if(Math.abs(cy - ay) < 6 && !greeted.has(a.n)){ greet(a); break; } }
+function near(ax, ay, r){ const dx = (C.x - ax)/100*W, dy = (C.y + 6 - ay)/100*H; return Math.hypot(dx, dy) < r * H; }
+function checkWorld(){
+  for(const a of ANIMALS){ if(!greeted.has(a.n) && near(a.x, a.y + 5, .2)){ greet(a); break; } }
+  if(state === "go" && C.y > 52){
+    WEEDS.forEach((wd, i) => {
+      if(Math.abs(C.x - wd.x) < 4.5 && !checked.has(i)){
+        checked.add(i); const e = els["weed" + i]; e.classList.add("part");
+        if(i === TREASURE[mission].weed) found(); else { say(["Hmm, not here!"]); setTimeout(() => e.classList.remove("part"), 2600); setTimeout(() => checked.delete(i), 6000); }
+      }
+    });
+  }
+  if(state === "carry" && C.x < 26 && C.y < 24) home();
 }
+// ===== 移動：按住按鈕持續游 =====
+const dirs = new Set(); let last = 0, lastSay = {};
+const SAY = {up:"Swim up!", down:"Swim down!", left:"Swim back!", right:"Swim forward!"};
+function loop(t){
+  const dt = Math.min(50, t - (last || t)) / 1000; last = t;
+  if(dirs.size && (state === "go" || state === "carry")){
+    const sx = 11 * 1080/1934 * (H ? 1 : 1), sy = 15;
+    if(dirs.has("left")){ C.x -= sx*dt; faceLeft = true; }
+    if(dirs.has("right")){ C.x += sx*dt; faceLeft = false; }
+    if(dirs.has("up")) C.y -= sy*dt;
+    if(dirs.has("down")) C.y += sy*dt;
+    C.x = Math.max(X_MIN, Math.min(X_MAX, C.x)); C.y = Math.max(Y_MIN, Math.min(Y_MAX, C.y));
+    place(); if(Math.random() < dt*3) bubbles();
+    checkWorld();
+  }
+  else place();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+document.querySelectorAll(".pad button").forEach(b => {
+  const d = b.dataset.d;
+  const on = e => { e.preventDefault(); if(state !== "go" && state !== "carry") return; dirs.add(d); b.classList.add("down");
+    const now = Date.now(); if(!busy && (!lastSay[d] || now - lastSay[d] > 2500)){ lastSay[d] = now; play(SAY[d]); } };
+  const off = () => { dirs.delete(d); b.classList.remove("down"); };
+  b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev => b.addEventListener(ev, off));
+});
+const KEY = {ArrowUp:"up", ArrowDown:"down", ArrowLeft:"left", ArrowRight:"right"};
+document.addEventListener("keydown", e => { const d = KEY[e.key]; if(d && (state === "go" || state === "carry")){ e.preventDefault(); if(!dirs.has(d) && !busy) play(SAY[d]); dirs.add(d); } if(e.key === " " && state === "found"){ e.preventDefault(); pick(); } });
+document.addEventListener("keyup", e => { const d = KEY[e.key]; if(d) dirs.delete(d); });
+function hint(list){ document.querySelectorAll(".pad button").forEach(b => b.classList.toggle("hint", list.includes(b.dataset.d))); }
+
+// ===== 任務 =====
 function setMission(){
   const t = TREASURE[mission];
   document.getElementById("mImg").src = `img/${t.n}.webp`;
   document.getElementById("mEn").textContent = `Find a ${t.n}!`;
-  document.getElementById("mZh").textContent = `找到${t.zh}，帶回岸上給 Rica`;
-  target.src = `img/${t.n}.webp`; target.style.display = ""; target.className = "target";
-  greeted = new Set(); state = "go";
-  play(`COCO, can you find a ${t.n}?`);
-  hint("dn");
+  document.getElementById("mZh").textContent = `去水草裡找${t.zh}`;
+  tEl.src = `img/${t.n}.webp`; tEl.className = "treasure" + (t.n === "pearl" ? " pearl" : ""); tEl.style.display = "";
+  greeted = new Set(); checked = new Set(); state = "go";
+  WEEDS.forEach((w, i) => els["weed" + i].classList.remove("part"));
+  layout(); play(`COCO, can you find a ${t.n}?`); hint(["right","down"]);
 }
-function hint(which){
-  document.getElementById("upBtn").classList.toggle("hint", which === "up");
-  document.getElementById("dnBtn").classList.toggle("hint", which === "dn");
-}
-function move(dir){
-  if(state === "idle" || state === "found" || state === "done") return;
-  const ny = Math.max(TOP_MIN, Math.min(TOP_MAX, y + dir*STEP));
-  if(ny === y){ arrive(); return; }
-  y = ny; place(); bubbles();
-  if(!busy) play(dir < 0 ? "Swim up!" : "Swim down!");
-  setTimeout(() => { checkMeet(); arrive(); }, 900);
-}
-function arrive(){
-  const t = TREASURE[mission];
-  if(state === "go" && y >= TOP_MAX){
-    state = "found"; hint(null);
-    target.classList.add("greet");
-    seq([`You found a ${t.n}!`, "Pick it up!"]);
-    document.getElementById("ctl").classList.add("hidden");
-    document.getElementById("pickCtl").classList.remove("hidden");
-  } else if(state === "carry" && y <= TOP_MIN){
-    state = "home"; hint(null);
-    const held = coco.querySelector(".held"); if(held) held.remove();
-    const slot = document.querySelectorAll("#basket i")[mission]; slot.innerHTML = `<img src="img/${t.n}.webp" alt="">`;
-    seq(["Thank you, COCO!", t.color], () => {
-      mission++;
-      if(mission < TREASURE.length) setTimeout(setMission, 500);
-      else finish();
-    });
-  }
+function found(){
+  const t = TREASURE[mission]; state = "found"; dirs.clear(); hint([]);
+  tEl.classList.add("shine");
+  seq([`You found a ${t.n}!`, "Pick it up!"]);
+  document.getElementById("pickBtn").classList.remove("hidden"); game.classList.add("picking");
 }
 function pick(){
   if(state !== "found") return;
-  const t = TREASURE[mission];
-  target.style.display = "none";
+  const t = TREASURE[mission]; tEl.style.display = "none";
   const h = document.createElement("img"); h.className = "held"; h.src = `img/${t.n}.webp`; h.alt = ""; coco.appendChild(h);
-  state = "carry";
-  document.getElementById("pickCtl").classList.add("hidden");
-  document.getElementById("ctl").classList.remove("hidden");
-  hint("up");
+  document.getElementById("pickBtn").classList.add("hidden"); game.classList.remove("picking");
+  state = "carry"; hint(["left","up"]);
   seq(["I found it!", "Now swim up!"]);
 }
-function finish(){
-  state = "done"; hint(null);
-  document.getElementById("mEn").textContent = "You found them all!";
-  document.getElementById("mZh").textContent = "三個寶物都找到了！往下看，一起說 I can ___!";
-  document.getElementById("mImg").src = "img/coco_swim.webp";
-  const p = document.getElementById("phrases"); p.classList.remove("hidden");
-  seq(["You found them all!"], () => setTimeout(() => { p.scrollIntoView({behavior:"smooth", block:"start"}); play("Let's say it together!"); }, 600));
+function home(){
+  const t = TREASURE[mission]; state = "home"; dirs.clear(); hint([]);
+  const h = coco.querySelector(".held"); if(h) h.remove();
+  document.querySelectorAll("#basket i")[mission].innerHTML = `<img src="img/${t.n}.webp" alt="">`;
+  seq(["Thank you, COCO!", t.color], () => { mission++; if(mission < TREASURE.length) setTimeout(setMission, 400); else finish(); });
 }
+function finish(){
+  state = "done"; hint([]);
+  document.getElementById("mImg").src = "img/coco_swim.webp";
+  document.getElementById("mEn").textContent = "You found them all!";
+  document.getElementById("mZh").textContent = "往下滑，一起說 I can ___!";
+  const p = document.getElementById("phrases"); p.classList.remove("hidden");
+  seq(["You found them all!"], () => setTimeout(() => { p.scrollIntoView({behavior:"smooth", block:"start"}); play("Let's say it together!"); }, 700));
+}
+document.getElementById("pickBtn").addEventListener("click", pick);
 document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("start").remove(); state = "go";
+  document.getElementById("start").remove(); state = "intro";
   play("Let's dive in!", () => setTimeout(setMission, 300));
 });
-let holdT = null;
-function holdStart(dir, e){ e.preventDefault(); move(dir); clearInterval(holdT); holdT = setInterval(() => move(dir), 1100); }
-function holdEnd(){ clearInterval(holdT); }
-[["upBtn",-1],["dnBtn",1]].forEach(([id,d]) => {
-  const b = document.getElementById(id);
-  b.addEventListener("pointerdown", e => holdStart(d, e));
-  ["pointerup","pointerleave","pointercancel"].forEach(ev => b.addEventListener(ev, holdEnd));
-});
-document.getElementById("pickBtn").addEventListener("click", pick);
-document.addEventListener("keydown", e => { if(e.key === "ArrowUp") move(-1); if(e.key === "ArrowDown") move(1); if(e.key === " " && state === "found") pick(); });
-place();
+layout();
 
-// 片語複習
+// ===== 片語複習 =====
 const PH = ANIMALS.concat(TREASURE.filter(t => t.can));
 document.getElementById("phr").innerHTML = PH.map((a,i) =>
   `<button class="pc" data-i="${i}"><img src="img/${a.n}.webp" alt="${a.n}"><b>${a.can}</b><span>${a.canZh}</span><em>${a.act}</em></button>`).join("");
 document.getElementById("phr").addEventListener("click", e => {
-  const c = e.target.closest(".pc"); if(!c) return; const a = PH[+c.dataset.i]; const im = c.querySelector("img");
-  im.classList.remove("greet"); void im.offsetWidth; im.classList.add("greet"); play(a.can);
+  const c = e.target.closest(".pc"); if(!c) return; const a = PH[+c.dataset.i], im = c.querySelector("img");
+  im.classList.remove("go"); void im.offsetWidth; im.classList.add("go"); speak(a.can);
 });
 
 const HUG = {
