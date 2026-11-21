@@ -118,6 +118,11 @@
   .goaltxt{display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--sun-deep); margin-top:4px}
   .ytwave{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; font-weight:700; color:var(--sky)}
   .ytwave img{width:64px; height:64px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:var(--shadow); animation:bob 2.6s ease-in-out infinite}
+  .nextlv{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); background:linear-gradient(135deg,#DDF0FB,#FFF6DC)}
+  .nextlv img{width:88px; flex:none; animation:bob 2.6s ease-in-out infinite}
+  .nextlv b{display:block; font-size:18px}
+  .nextlv span{font-size:13px; opacity:.8}
+  .nextlv i{font-style:normal; font-size:26px; font-weight:700; color:var(--sky); margin-left:auto}
   .yt{text-align:center}
   .yt p{margin:0 0 14px; font-size:15px}
   .ytbtn{display:flex; align-items:center; justify-content:center; gap:10px; border-radius:18px; background:#E62117; color:#fff; font-weight:700; font-size:18px; padding:14px; text-decoration:none}
@@ -169,6 +174,12 @@
     <div id="lines"></div>
     <button class="again" id="again">換一種回答再試試</button>
   </section>
+
+  <a class="card nextlv" href="ocean/">
+    <img src="ocean/img/coco_swim.webp" alt="戴浮潛面罩的柯基 COCO">
+    <div><div class="step">NEXT · LEVEL 2</div><b>下一關：COCO 去浮潛！</b><span>按 up / down 帶 COCO 找海底寶物，學 I can swim!</span></div>
+    <i aria-hidden="true">→</i>
+  </a>
 
   <section class="card night" id="endCard">
     <div class="duo"><img src="chars/coco_cape.jpg" alt="柯基 COCO"><img src="chars/rica_face.jpg" alt="Rica"></div>
